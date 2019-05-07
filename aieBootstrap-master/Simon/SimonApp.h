@@ -16,17 +16,38 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 
-	void SetTimer(int t);
+	void SetGameTimer();
+	void SetPlayerTimer();
+	void CheckGameTimer();
+	void CheckPlayerTimer();
 
+	void CheckBtnPressed(aie::Input* input);
+
+	void Fail();
+
+	bool CheckPlayerMatched();
 protected:
+	 
+	float gameTimer = 0; 
+	float playerTimer = 0;  
+	float btnIntervalTimer = 0;
+	float keyPressed = 0;
+	bool btnPressable = true;
+	bool gameOn = false;
+	bool nextLevel = false;
+	int score = 0;
+
 
 	Button*				m_btn1;
 	Button*				m_btn2;
 	Button*				m_btn3;
 	Button*				m_btn4;
 
-	int timer = 0;
-
+	std::vector<int>	toBePressed;
+	std::vector<Button*> buttons;
+	std::vector<Button*> toBePlayed; 
+	std::vector<int>	keysPressed;
+	
 	aie::Renderer2D*	m_2dRenderer;
-	aie::Font*			m_font;
+	aie::Font*			m_font; 
 };

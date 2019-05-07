@@ -2,7 +2,7 @@
 #include <Renderer2D.h>
 #include <string>
 #include <Input.h>
-Button::Button(int id) : m_id(id)
+Button::Button(int id) : m_id(id), m_isPlaying(false)
 {
 	m_size = glm::vec2(200, 200);
 }
@@ -15,29 +15,43 @@ Button::~Button()
 void Button::Draw(aie::Renderer2D* r, aie::Font* f)
 {
 	SetPos();
+	//red up
 	if (m_id == 1)
 	{
+	
 		if(!Hovering())
 			r->setRenderColour(1, 0, 0);
 	}
+	//green left
 	else if (m_id == 2)
 	{
+
+		r->drawText(f, "LEFT", m_pos.x, m_pos.y);
 		if(!Hovering())
 			r->setRenderColour(0, 1, 0);
-	}
+	} 
+	//blue right
 	else if (m_id == 3)
 	{
+
+	
 		if(!Hovering())
 			r->setRenderColour(0, 0, 1);
 	}
+	//yellow down
 	else if (m_id == 4)
 	{
+
+	
 		if(!Hovering())
 			r->setRenderColour(1, .9, .5);
 	}
 
 	r->drawBox(m_pos.x, m_pos.y, m_size.x, m_size.y);
 
+	r->setRenderColour(1, 1, 1, 1);
+	if (IsPlaying())
+		r->drawBox(m_pos.x, m_pos.y, m_size.x, m_size.y);
 
 	r->setRenderColour(1, 1, 1);
 }
@@ -56,6 +70,11 @@ void Button::SetScreen(float x, float y)
 {
 	screenX = x;
 	screenY = y;
+}
+
+void Button::SetIsPlaying(bool playingStatus)
+{
+	m_isPlaying = playingStatus;
 }
 
 glm::vec2 Button::GetPos()
@@ -103,3 +122,7 @@ void Button::SetPos()
 	}
 }
 	
+bool Button::IsPlaying()
+{
+	return m_isPlaying;
+}

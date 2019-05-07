@@ -17,17 +17,22 @@ public:
 	void SetFont(aie::Font* f);
 	void SetScreen(float x, float y);
 	void SetPos();
+	void SetIsPlaying(bool playingStatus);
 
 	glm::vec2 GetPos(); 
 
 	bool WasClicked();
 	bool Hovering();
+	bool IsPlaying();
 protected:
 private:
-	vec2 m_pos, m_size;
-	aie::Font* m_font;
-	int m_id, screenX, screenY;
 	
+	aie::Font* m_font;
 	aie::Input* m_input = aie::Input::getInstance();
 
+	bool m_isPlaying;
+
+	int m_id, screenX, screenY;
+	
+	vec2 m_pos, m_size;
 };
