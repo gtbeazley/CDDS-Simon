@@ -48,12 +48,7 @@ void SimonApp::shutdown() {
 void SimonApp::update(float deltaTime) {
 
 	aie::Input*	input = aie::Input::getInstance();
-	if (!gameOn &&
-		input->isKeyDown(aie::INPUT_KEY_SPACE))
-	{
- 		gameOn = true;
-		nextLevel = true;
-	}
+
 
 	if (gameOn)
 	{	
@@ -76,44 +71,42 @@ void SimonApp::update(float deltaTime) {
 		}
 
 		//check if theres more time 
-		if (playerTimer > 0)
+		if (playerTimer > 0
+			&& gameTimer <= 0)
 		{
-			//if sequence is not being played
-			if (gameTimer <= 0)
+			//check if there is a button that has been pressed
+			CheckBtnPressed(input);
+
+			//compare button pressed to buttons needed to press 
+			if (btnPressable == false)//(btnIntervalTimer > 0)
 			{
-				//check if there is a button that has been pressed
-				CheckBtnPressed(input);
-				//compare button pressed to buttons needed to press 
-				if(btnIntervalTimer > 0)
-				{	if (!CheckPlayerMatched())
-					{
-						Fail();
-					}
-					else if (keysPressed.size() == toBePressed.size())
-					{
-						nextLevel = true;
-					}
-				}
+				if (!CheckPlayerMatched())
+					Fail();
+				else if (keysPressed.size() == toBePressed.size())
+					nextLevel = true;
 			}
 		}
+		
 		//check if player time has run out
 		else if (playerTimer <= 0)
-		{
 			Fail();
-		}
 
 		//check if the time between the buttons pressed is to quick
 		if (btnIntervalTimer > 0)
 		{
 			btnIntervalTimer--;
-			btnPressable = false;
+			btnPressable = false; 
 		}
 		else
 		{
 			btnIntervalTimer = 0;
 			btnPressable = true;
 		}
-		//continue to draw
+	}	
+	else if ( input->isKeyDown(aie::INPUT_KEY_SPACE))
+	{
+ 		gameOn = true;
+		nextLevel = true;
 	}
 
 	// exit the application
@@ -147,15 +140,16 @@ void SimonApp::draw() {
 	{
 		float fullTime = toBePlayed.size() * 64;
 		// go through tobeplayed list
+	
 		for (int i = 0; i < toBePlayed.size(); i++)
 		{	
 			//check if gameTimer is still higher than fullTime - 
-			if (gameTimer > fullTime - (64 * (i + 1)))
+			if (gameTimer > fullTime - (64 + (64 * i)) 
+			&& gameTimer < fullTime - 32 + (64*i))
 				toBePlayed[i]->SetIsPlaying(false);
- 
-			if(gameTimer > fullTime - (64 * (i + .5)))
+			if (gameTimer > fullTime - (32 + (64 * i))
+				&& gameTimer < fullTime - (64 * i))
 				toBePlayed[i]->SetIsPlaying(true);
-		
 		}
 
 	}
@@ -186,22 +180,16 @@ void SimonApp::SetPlayerTimer()
 void SimonApp::CheckGameTimer()
 {
 	if (gameTimer > 0)
-	{
 		gameTimer--;
-	}
-
-	if(gameTimer <= 0)
+	else
 		gameTimer = 0;
 }
 
 void SimonApp::CheckPlayerTimer()
 {
 	if (playerTimer > 0)
-	{
 		playerTimer--;
-	}
-
-	if(playerTimer <= 0)
+	else
 		playerTimer = 0;
 }
 
@@ -225,18 +213,38 @@ void SimonApp::CheckBtnPressed(aie::Input* input)
 		{
 			keyPressed = 4;
 		}
+		else
+			btnPressable = true;
 	}
+
 	if (keyPressed != 0)
 	{
 		keysPressed.push_back(keyPressed);
-		btnIntervalTimer = 1;
-
+		btnIntervalTimer = 10;
+		btnPressable = false;
 	}
+
 	keyPressed = 0;
+}
+
+void SimonApp::Fail()
+{
+	gameOn = false;
+	btnIntervalTimer = 0;
+	btnPressable = true;
+	keyPressed = 0; 
+	toBePressed.clear(); 
+	toBePlayed.clear();
+	keysPressed.clear();
+
 }
 
 bool SimonApp::CheckPlayerMatched()
 {
+	if (keysPressed.size() == 1)
+		int t = 1;
+	if (keysPressed.size() == 2)
+		int t = 1;
 	int i = 0;
 	for (i = 0; i < keysPressed.size(); i++)
 	{
@@ -247,15 +255,3 @@ bool SimonApp::CheckPlayerMatched()
 	return true;
 }
 
-void SimonApp::Fail()
-{
-	gameOn = false;
-
-	 btnIntervalTimer = 0;
-	btnPressable = true;
-	 keyPressed = 0; 
-	toBePressed.clear(); 
-	toBePlayed.clear();
-	keysPressed.clear();
-
-}
