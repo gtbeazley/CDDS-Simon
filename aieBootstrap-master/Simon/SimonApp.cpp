@@ -138,6 +138,15 @@ void SimonApp::draw() {
 	}
 	else
 	{
+		if (gameTimer > 0)
+		{
+			m_2dRenderer->drawText(m_font, "Playing Sequence", 10, 600); 
+		}
+		else if (playerTimer > 0)
+		{
+			m_2dRenderer->drawText(m_font, "GOOOOOOO!!!!!", 10, 600);
+		}
+
 		float fullTime = toBePlayed.size() * 64;
 		// go through tobeplayed list
 	
