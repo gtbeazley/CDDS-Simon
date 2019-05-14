@@ -18,8 +18,8 @@ public:
 
 	void SetGameTimer();
 	void SetPlayerTimer();
-	void CheckGameTimer();
-	void CheckPlayerTimer();
+	void CheckGameTimer(float dt);
+	void CheckPlayerTimer(float dt);
 
 	void CheckBtnPressed(aie::Input* input);
 

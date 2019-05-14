@@ -15,9 +15,12 @@ public:
 	void Update(float deltaTime);
 
 	void SetFont(aie::Font* f);
+	void SetColour(aie::Renderer2D* r);
+	void SetBtnDisplay(aie::Renderer2D* r);
 	void SetScreen(float x, float y);
 	void SetPos();
 	void SetIsPlaying(bool playingStatus);
+
 
 	glm::vec2 GetPos(); 
 

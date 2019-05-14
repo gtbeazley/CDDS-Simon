@@ -54,6 +54,7 @@ void SimonApp::update(float deltaTime) {
 	{	
 		if (nextLevel)
 		{
+			
 			//Generate random number from 0-3
 			srand(time(NULL));
 			int RGN = rand() % 4;
@@ -109,6 +110,10 @@ void SimonApp::update(float deltaTime) {
 		nextLevel = true;
 	}
 
+	CheckGameTimer(deltaTime);
+	if(!gameTimer)
+		CheckPlayerTimer(deltaTime);
+
 	// exit the application
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
 		quit();
@@ -123,13 +128,26 @@ void SimonApp::draw() {
 	// begin drawing sprites
 	m_2dRenderer->begin();
 	 
+	if (playerTimer > 0)
+	{
+		int fulltime = 32 * toBePlayed.size();
+		if (playerTimer >= fulltime - 2)
+			m_2dRenderer->setRenderColour(0, 1, 0);
+		else
+			m_2dRenderer->setRenderColour(1, 0, 0);
+	
+		m_2dRenderer->drawBox(640, 700, 1280 / (fulltime / playerTimer), 10);
+		m_2dRenderer->setRenderColour(1, 1, 1);
+	}
+
 	//draw the buttons according to the screen
 	for (int i = 0; i < 4; i++)
 	{
 		buttons[i]->SetScreen(getWindowWidth(), getWindowHeight());
 		buttons[i]->Draw(m_2dRenderer, m_font);
 	} 
-	 
+	
+
 
 	if (!gameOn)
 	{
@@ -140,33 +158,42 @@ void SimonApp::draw() {
 	{
 		if (gameTimer > 0)
 		{
-			m_2dRenderer->drawText(m_font, "Playing Sequence", 10, 600); 
+			m_2dRenderer->drawText(m_font, "Playing Sequence", 100, 600); 
 		}
 		else if (playerTimer > 0)
 		{
-			m_2dRenderer->drawText(m_font, "GOOOOOOO!!!!!", 10, 600);
+			m_2dRenderer->drawText(m_font, "GOOOOOOO!!!!!", 100, 600);
 		}
 
-		float fullTime = toBePlayed.size() * 64;
+		float fullTime = toBePlayed.size() * 32;
 		// go through tobeplayed list
 	
+		for (int i = 0; i < buttons.size(); i++)
+			buttons[i]->SetIsPlaying(false);
 		for (int i = 0; i < toBePlayed.size(); i++)
 		{	
-			//check if gameTimer is still higher than fullTime - 
-			if (gameTimer > fullTime - (64 + (64 * i)) 
-			&& gameTimer < fullTime - 32 + (64*i))
-				toBePlayed[i]->SetIsPlaying(false);
-			if (gameTimer > fullTime - (32 + (64 * i))
-				&& gameTimer < fullTime - (64 * i))
-				toBePlayed[i]->SetIsPlaying(true);
+			//check if gameTimer 
+			if (gameTimer > fullTime - (31 + (32 * i))
+				&& gameTimer < fullTime - (32 * i))
+				toBePlayed[i]->SetIsPlaying(true);  
 		}
 
+		
+		for (int i = 0; i < toBePressed.size(); i++)
+		{
+			m_2dRenderer->setRenderColour(1, 0, 0);
+			m_2dRenderer->drawCircle(15 + (15 * i), 660, 5);
+
+		}
+		for (int i = 0; i < keysPressed.size(); i++)
+		{
+			if (keysPressed[i] == toBePressed[i])	
+				m_2dRenderer->setRenderColour(0, 1, 0);
+			m_2dRenderer->drawCircle(15 + (15 * i), 660, 5);
+		}
 	}
 
-	CheckGameTimer();
-	if(!gameTimer)
-		CheckPlayerTimer();
-
+	m_2dRenderer->setRenderColour(1, 1, 1);
 	m_2dRenderer->drawText(m_font, "Press ESC to quit", 0, 0);
 	
 	// done drawing sprites
@@ -177,27 +204,36 @@ void SimonApp::SetGameTimer()
 {
 	if (toBePlayed.size() > 0)
 	{
-		gameTimer = toBePlayed.size() * 64;
+		gameTimer = toBePlayed.size() * 32;
+	}
+
+	if (toBePlayed.size() == 0)
+	{
+		gameTimer += 32;
 	}
 }
 
 void SimonApp::SetPlayerTimer()
 {
-	playerTimer = toBePressed.size() * 64;
+	playerTimer = toBePressed.size() * 32;
+	if (toBePlayed.size() == 1)
+	{
+		playerTimer += 32.0f;
+	}
 }
 
-void SimonApp::CheckGameTimer()
+void SimonApp::CheckGameTimer(float dt)
 {
 	if (gameTimer > 0)
-		gameTimer--;
+		gameTimer -= (1 - dt);
 	else
 		gameTimer = 0;
 }
 
-void SimonApp::CheckPlayerTimer()
+void SimonApp::CheckPlayerTimer(float dt)
 {
 	if (playerTimer > 0)
-		playerTimer--;
+		playerTimer -= (1 - dt);
 	else
 		playerTimer = 0;
 }
@@ -259,6 +295,7 @@ bool SimonApp::CheckPlayerMatched()
 	{
 		if (keysPressed[i] != toBePressed[i])
 			return false;
+
 	}
 	score = i + 1;
 	return true;

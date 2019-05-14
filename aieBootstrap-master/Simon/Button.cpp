@@ -15,43 +15,24 @@ Button::~Button()
 void Button::Draw(aie::Renderer2D* r, aie::Font* f)
 {
 	SetPos();
-	//red up
-	if (m_id == 1)
-	{
 	
-		if(!Hovering())
-			r->setRenderColour(1, 0, 0);
-	}
-	//green left
-	else if (m_id == 2)
-	{
-
-		r->drawText(f, "LEFT", m_pos.x, m_pos.y);
-		if(!Hovering())
-			r->setRenderColour(0, 1, 0);
-	} 
-	//blue right
-	else if (m_id == 3)
-	{
-
-	
-		if(!Hovering())
-			r->setRenderColour(0, 0, 1);
-	}
-	//yellow down
-	else if (m_id == 4)
-	{
-
-	
-		if(!Hovering())
-			r->setRenderColour(1, .9, .5);
-	}
+	SetColour(r);
 
 	r->drawBox(m_pos.x, m_pos.y, m_size.x, m_size.y);
 
+
 	r->setRenderColour(1, 1, 1, 1);
 	if (IsPlaying())
+	{
 		r->drawBox(m_pos.x, m_pos.y, m_size.x, m_size.y);
+		SetColour(r);
+	}
+	else
+		r->setRenderColour(1, 1, 1, 1);
+	r->drawBox(m_pos.x, m_pos.y, 40, 40, .775);
+		
+	SetBtnDisplay(r);
+
 
 	r->setRenderColour(1, 1, 1);
 }
@@ -125,4 +106,59 @@ void Button::SetPos()
 bool Button::IsPlaying()
 {
 	return m_isPlaying;
+}
+
+void Button::SetColour(aie::Renderer2D* r)
+{
+//red up
+	if (m_id == 1)
+	{
+	
+		if(!Hovering())
+			r->setRenderColour(1, 0, 0);
+	}
+	//green left
+	else if (m_id == 2)
+	{ 
+		if(!Hovering())
+			r->setRenderColour(0, 1, 0);
+	} 
+	//blue right
+	else if (m_id == 3)
+	{ 
+		if(!Hovering())
+			r->setRenderColour(0, 0, 1);
+	}
+	//yellow down
+	else if (m_id == 4)
+	{ 
+		if(!Hovering())
+			r->setRenderColour(1, .9, .5);
+	}
+}
+
+void Button::SetBtnDisplay(aie::Renderer2D* r)
+{
+	float offSet = 25;
+	SetColour(r);
+	//red up
+	if (m_id == 1)
+	{
+		r->drawBox(m_pos.x, m_pos.y - offSet, 50, 50);
+	}
+	//green left
+	else if (m_id == 2)
+	{ 
+		r->drawBox(m_pos.x + offSet, m_pos.y, 50, 50);
+	}
+	//blue right
+	else if (m_id == 3)
+	{ 
+		r->drawBox(m_pos.x - offSet, m_pos.y, 50, 50);
+	}
+	//yellow down
+	else if (m_id == 4)
+	{
+		r->drawBox(m_pos.x, m_pos.y + offSet, 50, 50);
+	}
 }
