@@ -54,7 +54,7 @@ void SimonApp::update(float deltaTime) {
 	{	
 		if (nextLevel)
 		{
-			
+			failed = false;
 			//Generate random number from 0-3
 			srand(time(NULL));
 			int RGN = rand() % 4;
@@ -140,6 +140,7 @@ void SimonApp::draw() {
 		m_2dRenderer->setRenderColour(1, 1, 1);
 	}
 
+
 	//draw the buttons according to the screen
 	for (int i = 0; i < 4; i++)
 	{
@@ -147,22 +148,22 @@ void SimonApp::draw() {
 		buttons[i]->Draw(m_2dRenderer, m_font);
 	} 
 	
-
+	glm::vec2 scrSize(getWindowWidth(), getWindowHeight());
 
 	if (!gameOn)
 	{
-		m_2dRenderer->drawText(m_font, "Press SPACE to start", 100, 600);
+		m_2dRenderer->drawText(m_font, "Press SPACE to start", getWindowWidth() / 2 - 180, getWindowHeight() / 2 - 10);
 		//m_2dRenderer->drawText(m_font, score, 100, 550);
 	}
 	else
 	{
 		if (gameTimer > 0)
 		{
-			m_2dRenderer->drawText(m_font, "Playing Sequence", 100, 600); 
+			m_2dRenderer->drawText(m_font, "Playing Sequence", getWindowWidth() / 2 - 150, getWindowHeight() / 2 - 10);
 		}
 		else if (playerTimer > 0)
 		{
-			m_2dRenderer->drawText(m_font, "GOOOOOOO!!!!!", 100, 600);
+			m_2dRenderer->drawText(m_font, "GOOOOOOO!!!!!", getWindowWidth() / 2 - 100, getWindowHeight() / 2 - 10);
 		}
 
 		float fullTime = toBePlayed.size() * 32;
@@ -182,15 +183,30 @@ void SimonApp::draw() {
 		for (int i = 0; i < toBePressed.size(); i++)
 		{
 			m_2dRenderer->setRenderColour(1, 0, 0);
-			m_2dRenderer->drawCircle(15 + (15 * i), 660, 5);
+			m_2dRenderer->drawCircle(getWindowWidth() / 4 + (30 * i), 660, 10);
 
 		}
 		for (int i = 0; i < keysPressed.size(); i++)
 		{
 			if (keysPressed[i] == toBePressed[i])	
 				m_2dRenderer->setRenderColour(0, 1, 0);
-			m_2dRenderer->drawCircle(15 + (15 * i), 660, 5);
+			m_2dRenderer->drawCircle(getWindowWidth() / 4 + (30 * i), 660, 10);
 		}
+	}
+
+
+	if (failed)
+	{
+		m_2dRenderer->setRenderColour(.5, 0, 0);
+		m_2dRenderer->drawBox(getWindowWidth() / 2, getWindowHeight() / 2 + 50, 100, 50);
+
+		m_2dRenderer->setRenderColour(0, 0, 0);
+		m_2dRenderer->drawText(m_font, "Fail", getWindowWidth() / 2 - 35, getWindowHeight() / 2 + 40); 
+		
+		m_2dRenderer->setRenderColour(1, 1, 1);
+		char result[64];
+		snprintf(result, 64, "Score %i points", score);
+		m_2dRenderer->drawText(m_font, result, getWindowWidth() / 2 - 100, getWindowHeight() / 2 - 70);
 	}
 
 	m_2dRenderer->setRenderColour(1, 1, 1);
@@ -281,7 +297,7 @@ void SimonApp::Fail()
 	toBePressed.clear(); 
 	toBePlayed.clear();
 	keysPressed.clear();
-
+	failed = true;
 }
 
 bool SimonApp::CheckPlayerMatched()

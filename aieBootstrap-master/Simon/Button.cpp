@@ -4,7 +4,7 @@
 #include <Input.h>
 Button::Button(int id) : m_id(id), m_isPlaying(false)
 {
-	m_size = glm::vec2(200, 200);
+	m_size = glm::vec2(150, 150);
 }
 
 Button::~Button()
@@ -144,21 +144,48 @@ void Button::SetBtnDisplay(aie::Renderer2D* r)
 	//red up
 	if (m_id == 1)
 	{
+		if (BtnPressed(aie::INPUT_KEY_UP))
+		{
+			r->setRenderColour(1, 1, 1, 1);
+		}
 		r->drawBox(m_pos.x, m_pos.y - offSet, 50, 50);
 	}
 	//green left
 	else if (m_id == 2)
 	{ 
+		if (BtnPressed(aie::INPUT_KEY_LEFT))
+		{
+			r->setRenderColour(1, 1, 1, 1);
+		}
 		r->drawBox(m_pos.x + offSet, m_pos.y, 50, 50);
 	}
 	//blue right
 	else if (m_id == 3)
-	{ 
+	{
+		if (BtnPressed(aie::INPUT_KEY_RIGHT))
+		{
+			r->setRenderColour(1, 1, 1, 1);
+		}
 		r->drawBox(m_pos.x - offSet, m_pos.y, 50, 50);
 	}
 	//yellow down
 	else if (m_id == 4)
 	{
+		if (BtnPressed(aie::INPUT_KEY_DOWN))
+		{
+			r->setRenderColour(1, 1, 1, 1);
+		}
 		r->drawBox(m_pos.x, m_pos.y + offSet, 50, 50);
 	}
+}
+
+
+bool Button::BtnPressed(aie::EInputCodes e)
+{
+	aie::Input* input = aie::Input::getInstance();
+	if (input->isKeyDown(e))
+		return true;
+	else 
+		return false;
+		
 }

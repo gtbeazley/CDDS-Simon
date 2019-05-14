@@ -20,10 +20,11 @@ public:
 	void SetScreen(float x, float y);
 	void SetPos();
 	void SetIsPlaying(bool playingStatus);
-
+	
 
 	glm::vec2 GetPos(); 
 
+	bool BtnPressed(aie::EInputCodes e);
 	bool WasClicked();
 	bool Hovering();
 	bool IsPlaying();

@@ -17,7 +17,9 @@ public:
 	virtual void draw();
 
 	void SetGameTimer();
-	void SetPlayerTimer();
+	void SetPlayerTimer(); 
+
+	 
 	void CheckGameTimer(float dt);
 	void CheckPlayerTimer(float dt);
 
@@ -28,13 +30,18 @@ public:
 	bool CheckPlayerMatched();
 protected:
 	 
+
+	float scoreNodeTimer = 0;
 	float gameTimer = 0; 
 	float playerTimer = 0;  
 	float btnIntervalTimer = 0;
 	float keyPressed = 0;
+
 	bool btnPressable = true;
 	bool gameOn = false;
 	bool nextLevel = false;
+	bool failed = false;
+
 	int score = 0;
 
 
