@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "Renderer2D.h"
 #include "Button.h"
+#include "DoubleLinkedList.h"
 
 class SimonApp : public aie::Application {
 public:
@@ -42,7 +43,7 @@ protected:
 	bool nextLevel = false;
 	bool failed = false;
 
-	int score = 0;
+	int curScore, hiScore;
 
 
 	Button*				m_btn1;
@@ -57,4 +58,6 @@ protected:
 	
 	aie::Renderer2D*	m_2dRenderer;
 	aie::Font*			m_font; 
+
+	
 };

@@ -3,10 +3,13 @@
 #include "Font.h"
 #include "Input.h"
 #include "Button.h"
+#include "DoubleLinkedList.h"
+
 #include <vector>
 #include <stdio.h>      
 #include <stdlib.h>     
 #include <time.h>
+#include <iostream>
 
 SimonApp::SimonApp() {
 
@@ -48,22 +51,24 @@ void SimonApp::shutdown() {
 void SimonApp::update(float deltaTime) {
 
 	aie::Input*	input = aie::Input::getInstance();
-
+	DoubleLinkedList<int> D;
+	//D.PushFront(2);
+	//std::cout << D.First() << std::endl;
 
 	if (gameOn)
 	{	
 		if (nextLevel)
 		{
-			failed = false;
+			curScore++;
 			//Generate random number from 0-3
 			srand(time(NULL));
 			int RGN = rand() % 4;
 
-			//Push the buttons that are going to be checked for the game
+			//Push the buttons that are going to be checked for the game on to the array
 			toBePlayed.push_back(buttons[RGN]);
 			toBePressed.push_back(1 + RGN);
 
-			//Set timers for sequence to be played
+			//Set timers for the new sequence to be played
 			SetGameTimer();
 			SetPlayerTimer();
 			keysPressed.clear();
@@ -106,6 +111,8 @@ void SimonApp::update(float deltaTime) {
 	}	
 	else if ( input->isKeyDown(aie::INPUT_KEY_SPACE))
 	{
+		curScore = 0;
+		failed = false;
  		gameOn = true;
 		nextLevel = true;
 	}
@@ -152,8 +159,7 @@ void SimonApp::draw() {
 
 	if (!gameOn)
 	{
-		m_2dRenderer->drawText(m_font, "Press SPACE to start", getWindowWidth() / 2 - 180, getWindowHeight() / 2 - 10);
-		//m_2dRenderer->drawText(m_font, score, 100, 550);
+		m_2dRenderer->drawText(m_font, "Press SPACE to start", getWindowWidth() / 2 - 180, getWindowHeight() / 2 - 10); 
 	}
 	else
 	{
@@ -204,9 +210,12 @@ void SimonApp::draw() {
 		m_2dRenderer->drawText(m_font, "Fail", getWindowWidth() / 2 - 35, getWindowHeight() / 2 + 40); 
 		
 		m_2dRenderer->setRenderColour(1, 1, 1);
-		char result[64];
-		snprintf(result, 64, "Score %i points", score);
-		m_2dRenderer->drawText(m_font, result, getWindowWidth() / 2 - 100, getWindowHeight() / 2 - 70);
+		char cScrTxt[64];
+		snprintf(cScrTxt, 64, "Your score: %i points", curScore);
+		m_2dRenderer->drawText(m_font, cScrTxt, getWindowWidth() / 2 - 180, getWindowHeight() / 2 - 70);
+		char hScrTxt[64];
+		snprintf(hScrTxt, 64, "Highest Score: %i points", hiScore);
+		m_2dRenderer->drawText(m_font, hScrTxt, getWindowWidth() / 20, getWindowHeight() / 8 * 7);
 	}
 
 	m_2dRenderer->setRenderColour(1, 1, 1);
@@ -290,6 +299,8 @@ void SimonApp::CheckBtnPressed(aie::Input* input)
 
 void SimonApp::Fail()
 {
+	if (curScore > hiScore)
+		hiScore = curScore;
 	gameOn = false;
 	btnIntervalTimer = 0;
 	btnPressable = true;
@@ -312,8 +323,7 @@ bool SimonApp::CheckPlayerMatched()
 		if (keysPressed[i] != toBePressed[i])
 			return false;
 
-	}
-	score = i + 1;
+	} 
 	return true;
 }
 

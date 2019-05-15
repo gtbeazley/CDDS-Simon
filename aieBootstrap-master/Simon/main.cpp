@@ -1,5 +1,7 @@
 #include "SimonApp.h"
 
+#include <iostream>
+
 int main() {
 	
 	// allocation
@@ -11,5 +13,9 @@ int main() {
 	// deallocation
 	delete app;
 
+
+	
+
+	system("pause");
 	return 0;
 }
