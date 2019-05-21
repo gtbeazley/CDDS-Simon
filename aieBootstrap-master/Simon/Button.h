@@ -20,7 +20,7 @@ public:
 	void SetScreen(float x, float y);
 	void SetPos();
 	void SetIsPlaying(bool playingStatus);
-	
+	void SetBtnPressable(bool bPressed);
 
 	glm::vec2 GetPos(); 
 
@@ -35,7 +35,7 @@ private:
 	aie::Input* m_input = aie::Input::getInstance();
 
 	bool m_isPlaying;
-
+	bool btnPressable;
 	int m_id, screenX, screenY;
 	
 	vec2 m_pos, m_size;

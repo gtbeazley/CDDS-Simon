@@ -17,15 +17,21 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 
+	void DrawButtons();
+	void DrawGameScreen();
+	void DrawTimer();
+
 	void SetGameTimer();
 	void SetPlayerTimer(); 
 
 	 
 	void CheckGameTimer(float dt);
 	void CheckPlayerTimer(float dt);
-
 	void CheckBtnPressed(aie::Input* input);
 
+	void GameLogic(aie::Input *input);
+
+	void NextLevel();
 	void Fail();
 
 	bool CheckPlayerMatched();

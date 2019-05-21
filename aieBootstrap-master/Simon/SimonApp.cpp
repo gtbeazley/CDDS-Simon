@@ -51,63 +51,15 @@ void SimonApp::shutdown() {
 void SimonApp::update(float deltaTime) {
 
 	aie::Input*	input = aie::Input::getInstance();
-	DoubleLinkedList<int> D;
+	//DoubleLinkedList<int> D;
 	//D.PushFront(2);
 	//std::cout << D.First() << std::endl;
 
 	if (gameOn)
 	{	
-		if (nextLevel)
-		{
-			curScore++;
-			//Generate random number from 0-3
-			srand(time(NULL));
-			int RGN = rand() % 4;
+		NextLevel();
 
-			//Push the buttons that are going to be checked for the game on to the array
-			toBePlayed.push_back(buttons[RGN]);
-			toBePressed.push_back(1 + RGN);
-
-			//Set timers for the new sequence to be played
-			SetGameTimer();
-			SetPlayerTimer();
-			keysPressed.clear();
-			nextLevel = false;
-
-		}
-
-		//check if theres more time 
-		if (playerTimer > 0
-			&& gameTimer <= 0)
-		{
-			//check if there is a button that has been pressed
-			CheckBtnPressed(input);
-
-			//compare button pressed to buttons needed to press 
-			if (btnPressable == false)//(btnIntervalTimer > 0)
-			{
-				if (!CheckPlayerMatched())
-					Fail();
-				else if (keysPressed.size() == toBePressed.size())
-					nextLevel = true;
-			}
-		}
-		
-		//check if player time has run out
-		else if (playerTimer <= 0)
-			Fail();
-
-		//check if the time between the buttons pressed is to quick
-		if (btnIntervalTimer > 0)
-		{
-			btnIntervalTimer--;
-			btnPressable = false; 
-		}
-		else
-		{
-			btnIntervalTimer = 0;
-			btnPressable = true;
-		}
+		GameLogic(input);
 	}	
 	else if ( input->isKeyDown(aie::INPUT_KEY_SPACE))
 	{
@@ -135,88 +87,13 @@ void SimonApp::draw() {
 	// begin drawing sprites
 	m_2dRenderer->begin();
 	 
-	if (playerTimer > 0)
-	{
-		int fulltime = 32 * toBePlayed.size();
-		if (playerTimer >= fulltime - 2)
-			m_2dRenderer->setRenderColour(0, 1, 0);
-		else
-			m_2dRenderer->setRenderColour(1, 0, 0);
+	DrawTimer();
+
+	DrawButtons();
 	
-		m_2dRenderer->drawBox(640, 700, 1280 / (fulltime / playerTimer), 10);
-		m_2dRenderer->setRenderColour(1, 1, 1);
-	}
+	//glm::vec2 scrSize(getWindowWidth(), getWindowHeight());
 
-
-	//draw the buttons according to the screen
-	for (int i = 0; i < 4; i++)
-	{
-		buttons[i]->SetScreen(getWindowWidth(), getWindowHeight());
-		buttons[i]->Draw(m_2dRenderer, m_font);
-	} 
-	
-	glm::vec2 scrSize(getWindowWidth(), getWindowHeight());
-
-	if (!gameOn)
-	{
-		m_2dRenderer->drawText(m_font, "Press SPACE to start", getWindowWidth() / 2 - 180, getWindowHeight() / 2 - 10); 
-	}
-	else
-	{
-		if (gameTimer > 0)
-		{
-			m_2dRenderer->drawText(m_font, "Playing Sequence", getWindowWidth() / 2 - 150, getWindowHeight() / 2 - 10);
-		}
-		else if (playerTimer > 0)
-		{
-			m_2dRenderer->drawText(m_font, "GOOOOOOO!!!!!", getWindowWidth() / 2 - 100, getWindowHeight() / 2 - 10);
-		}
-
-		float fullTime = toBePlayed.size() * 32;
-		// go through tobeplayed list
-	
-		for (int i = 0; i < buttons.size(); i++)
-			buttons[i]->SetIsPlaying(false);
-		for (int i = 0; i < toBePlayed.size(); i++)
-		{	
-			//check if gameTimer 
-			if (gameTimer > fullTime - (31 + (32 * i))
-				&& gameTimer < fullTime - (32 * i))
-				toBePlayed[i]->SetIsPlaying(true);  
-		}
-
-		
-		for (int i = 0; i < toBePressed.size(); i++)
-		{
-			m_2dRenderer->setRenderColour(1, 0, 0);
-			m_2dRenderer->drawCircle(getWindowWidth() / 4 + (30 * i), 660, 10);
-
-		}
-		for (int i = 0; i < keysPressed.size(); i++)
-		{
-			if (keysPressed[i] == toBePressed[i])	
-				m_2dRenderer->setRenderColour(0, 1, 0);
-			m_2dRenderer->drawCircle(getWindowWidth() / 4 + (30 * i), 660, 10);
-		}
-	}
-
-
-	if (failed)
-	{
-		m_2dRenderer->setRenderColour(.5, 0, 0);
-		m_2dRenderer->drawBox(getWindowWidth() / 2, getWindowHeight() / 2 + 50, 100, 50);
-
-		m_2dRenderer->setRenderColour(0, 0, 0);
-		m_2dRenderer->drawText(m_font, "Fail", getWindowWidth() / 2 - 35, getWindowHeight() / 2 + 40); 
-		
-		m_2dRenderer->setRenderColour(1, 1, 1);
-		char cScrTxt[64];
-		snprintf(cScrTxt, 64, "Your score: %i points", curScore);
-		m_2dRenderer->drawText(m_font, cScrTxt, getWindowWidth() / 2 - 180, getWindowHeight() / 2 - 70);
-		char hScrTxt[64];
-		snprintf(hScrTxt, 64, "Highest Score: %i points", hiScore);
-		m_2dRenderer->drawText(m_font, hScrTxt, getWindowWidth() / 20, getWindowHeight() / 8 * 7);
-	}
+	DrawGameScreen();
 
 	m_2dRenderer->setRenderColour(1, 1, 1);
 	m_2dRenderer->drawText(m_font, "Press ESC to quit", 0, 0);
@@ -327,3 +204,151 @@ bool SimonApp::CheckPlayerMatched()
 	return true;
 }
 
+void SimonApp::NextLevel()
+{
+	if (nextLevel)
+	{
+		curScore++;
+		//Generate random number from 0-3
+		srand(time(NULL));
+		int RGN = rand() % 4;
+
+		//Push the buttons that are going to be checked for the game on to the array
+		toBePlayed.push_back(buttons[RGN]);
+		toBePressed.push_back(1 + RGN);
+
+		//Set timers for the new sequence to be played
+		SetGameTimer();
+		SetPlayerTimer();
+		keysPressed.clear();
+		nextLevel = false;
+
+	}
+}
+
+void SimonApp::GameLogic(aie::Input *input)
+{
+	//check if theres more time 
+	if (playerTimer > 0
+		&& gameTimer <= 0)
+	{
+		//check if there is a button that has been pressed
+		CheckBtnPressed(input);
+
+		//compare button pressed to buttons needed to press 
+		if (btnPressable == false)//(btnIntervalTimer > 0)
+		{
+			if (!CheckPlayerMatched())
+				Fail();
+			else if (keysPressed.size() == toBePressed.size())
+				nextLevel = true;
+		}
+	}
+	//check if player time has run out
+	else if (playerTimer <= 0)
+		Fail();
+
+	//check if the time between the buttons pressed is to quick
+	if (btnIntervalTimer > 0)
+	{
+		btnIntervalTimer--;
+		btnPressable = false;
+	}
+	else
+	{
+		btnIntervalTimer = 0;
+		btnPressable = true;
+	}
+}
+
+void SimonApp::DrawButtons()
+{
+
+	//draw the buttons according to the screen
+	for (int i = 0; i < 4; i++)
+	{
+		buttons[i]->SetScreen(getWindowWidth(), getWindowHeight());
+		buttons[i]->Draw(m_2dRenderer, m_font);
+	}
+
+	if (gameOn)
+	{
+		float fullTime = toBePlayed.size() * 32;
+		// go through tobeplayed list
+
+		for (int i = 0; i < buttons.size(); i++)
+			buttons[i]->SetIsPlaying(false);
+		for (int i = 0; i < toBePlayed.size(); i++)
+		{
+			//check if gameTimer 
+			if (gameTimer > fullTime - (31 + (32 * i))
+				&& gameTimer < fullTime - (32 * i))
+				toBePlayed[i]->SetIsPlaying(true);
+		}
+	}
+}
+
+void SimonApp::DrawGameScreen()
+{
+	if (!gameOn)
+	{
+		m_2dRenderer->drawText(m_font, "Press SPACE to start", getWindowWidth() / 2 - 180, getWindowHeight() / 2 - 10);
+	}
+	else
+	{
+		if (gameTimer > 0)
+		{
+			m_2dRenderer->drawText(m_font, "Playing Sequence", getWindowWidth() / 2 - 150, getWindowHeight() / 2 - 10);
+		}
+		else if (playerTimer > 0)
+		{
+			m_2dRenderer->drawText(m_font, "GOOOOOOO!!!!!", getWindowWidth() / 2 - 100, getWindowHeight() / 2 - 10);
+		}
+
+		for (int i = 0; i < toBePressed.size(); i++)
+		{
+			m_2dRenderer->setRenderColour(1, 0, 0);
+			m_2dRenderer->drawCircle(getWindowWidth() / 4 + (30 * i), 660, 10);
+
+		}
+		for (int i = 0; i < keysPressed.size(); i++)
+		{
+			if (keysPressed[i] == toBePressed[i])
+				m_2dRenderer->setRenderColour(0, 1, 0);
+			m_2dRenderer->drawCircle(getWindowWidth() / 4 + (30 * i), 660, 10);
+		}
+	}
+
+
+	if (failed)
+	{
+		m_2dRenderer->setRenderColour(.5, 0, 0);
+		m_2dRenderer->drawBox(getWindowWidth() / 2, getWindowHeight() / 2 + 50, 100, 50);
+
+		m_2dRenderer->setRenderColour(0, 0, 0);
+		m_2dRenderer->drawText(m_font, "Fail", getWindowWidth() / 2 - 35, getWindowHeight() / 2 + 40);
+
+		m_2dRenderer->setRenderColour(1, 1, 1);
+		char cScrTxt[64];
+		snprintf(cScrTxt, 64, "Your score: %i points", curScore);
+		m_2dRenderer->drawText(m_font, cScrTxt, getWindowWidth() / 2 - 180, getWindowHeight() / 2 - 70);
+		char hScrTxt[64];
+		snprintf(hScrTxt, 64, "Highest Score: %i points", hiScore);
+		m_2dRenderer->drawText(m_font, hScrTxt, getWindowWidth() / 20, getWindowHeight() / 8 * 7);
+	}
+}
+
+void SimonApp::DrawTimer()
+{
+	if (playerTimer > 0)
+	{
+		int fulltime = 32 * toBePlayed.size();
+		if (playerTimer >= fulltime - 2)
+			m_2dRenderer->setRenderColour(0, 1, 0);
+		else
+			m_2dRenderer->setRenderColour(1, 0, 0);
+
+		m_2dRenderer->drawBox(640, 700, 1280 / (fulltime / playerTimer), 10);
+		m_2dRenderer->setRenderColour(1, 1, 1);
+	}
+}

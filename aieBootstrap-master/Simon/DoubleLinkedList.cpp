@@ -81,7 +81,7 @@ void DoubleLinkedList::Insert(int a_iter, int a_data)
  	
 void DoubleLinkedList::PopFront()
 {
-	if (!Empty)
+	if (!Empty())
 	{
 		if (Size() > 1)
 		{
@@ -101,7 +101,7 @@ void DoubleLinkedList::PopFront()
  	
 void DoubleLinkedList::PopBack()
 {
-	if (!Empty)
+	if (!Empty())
 	{
 		if (Size() > 1)
 		{
@@ -143,7 +143,7 @@ void DoubleLinkedList::Erase(int a_iter)
  	
 void DoubleLinkedList::Remove(int a_data)
 {
-	if (!Empty)
+	if (!Empty())
 	{
 		while (First() == a_data)
 			PopFront();
