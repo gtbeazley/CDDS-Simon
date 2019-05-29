@@ -144,8 +144,7 @@ void Button::SetBtnDisplay(aie::Renderer2D* r)
 	//red up
 	if (m_id == 1)
 	{
-		if (BtnPressed(aie::INPUT_KEY_UP)
-			&& )
+		if (BtnPressed(aie::INPUT_KEY_UP))
 		{
 			r->setRenderColour(1, 1, 1, 1);
 		}
