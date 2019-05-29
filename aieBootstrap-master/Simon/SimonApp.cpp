@@ -127,7 +127,7 @@ void SimonApp::SetPlayerTimer()
 void SimonApp::CheckGameTimer(float dt)
 {
 	if (gameTimer > 0)
-		gameTimer -= dt * 32;
+		gameTimer -= (1 - dt);
 	else
 		gameTimer = 0;
 }
@@ -135,7 +135,7 @@ void SimonApp::CheckGameTimer(float dt)
 void SimonApp::CheckPlayerTimer(float dt)
 {
 	if (playerTimer > 0)
-		playerTimer -= dt * 32;
+		playerTimer -= (1 - dt);
 	else
 		playerTimer = 0;
 }
