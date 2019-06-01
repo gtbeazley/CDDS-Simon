@@ -59,7 +59,7 @@ void SimonApp::update(float deltaTime) {
 	{	
 		NextLevel();
 
-		GameLogic(input);
+		GameLogic(input, deltaTime);
 	}	
 	else if ( input->isKeyDown(aie::INPUT_KEY_SPACE))
 	{
@@ -127,7 +127,7 @@ void SimonApp::SetPlayerTimer()
 void SimonApp::CheckGameTimer(float dt)
 {
 	if (gameTimer > 0)
-		gameTimer -= (1 - dt);
+		gameTimer -= dt * 32;
 	else
 		gameTimer = 0;
 }
@@ -135,7 +135,7 @@ void SimonApp::CheckGameTimer(float dt)
 void SimonApp::CheckPlayerTimer(float dt)
 {
 	if (playerTimer > 0)
-		playerTimer -= (1 - dt);
+		playerTimer -= dt * 32;
 	else
 		playerTimer = 0;
 }
@@ -144,24 +144,28 @@ void SimonApp::CheckBtnPressed(aie::Input* input)
 {	
 	if (btnPressable)
 	{
-		if (input->isKeyDown(aie::INPUT_KEY_UP))
+		if (input->isKeyDown(aie::INPUT_KEY_UP)
+			|| input->isKeyDown(aie::INPUT_KEY_W))
 		{
 			keyPressed = 1;
 		}
-		else if (input->isKeyDown(aie::INPUT_KEY_LEFT))
+		else if (input->isKeyDown(aie::INPUT_KEY_LEFT)
+			|| input->isKeyDown(aie::INPUT_KEY_A))
 		{
 			keyPressed = 2;
 		}
-		else if (input->isKeyDown(aie::INPUT_KEY_RIGHT))
+		else if (input->isKeyDown(aie::INPUT_KEY_RIGHT)
+			|| input->isKeyDown(aie::INPUT_KEY_D))
 		{
 			keyPressed = 3;
 		}
-		else if (input->isKeyDown(aie::INPUT_KEY_DOWN))
+		else if (input->isKeyDown(aie::INPUT_KEY_DOWN)
+			|| input->isKeyDown(aie::INPUT_KEY_S))
 		{
 			keyPressed = 4;
 		}
-		else
-			btnPressable = true;
+		//else
+			//btnPressable = true;
 	}
 
 	if (keyPressed != 0)
@@ -226,7 +230,7 @@ void SimonApp::NextLevel()
 	}
 }
 
-void SimonApp::GameLogic(aie::Input *input)
+void SimonApp::GameLogic(aie::Input *input, float dt)
 {
 	//check if theres more time 
 	if (playerTimer > 0
@@ -251,10 +255,10 @@ void SimonApp::GameLogic(aie::Input *input)
 	//check if the time between the buttons pressed is to quick
 	if (btnIntervalTimer > 0)
 	{
-		btnIntervalTimer--;
-		btnPressable = false;
+		btnIntervalTimer-= dt * 55;
+		//btnPressable = false;
 	}
-	else
+	if (input->getPressedKeys().size() == 0)
 	{
 		btnIntervalTimer = 0;
 		btnPressable = true;

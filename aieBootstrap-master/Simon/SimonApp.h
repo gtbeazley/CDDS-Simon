@@ -29,7 +29,7 @@ public:
 	void CheckPlayerTimer(float dt);
 	void CheckBtnPressed(aie::Input* input);
 
-	void GameLogic(aie::Input *input);
+	void GameLogic(aie::Input *input, float dt);
 
 	void NextLevel();
 	void Fail();
