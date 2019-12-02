@@ -1,31 +1,27 @@
 #include "DoubleLinkedList.h"
-
-#include <type_traits>
-
- 
 DoubleLinkedList::DoubleLinkedList() : m_first(nullptr), m_last(nullptr)
 {
 
 };
 
- 
+
 DoubleLinkedList::~DoubleLinkedList()
 {
 
 }
 
- 	
+
 void DoubleLinkedList::PushFront(int a_data)
 {
 	Node* n = new Node(a_data);
 	if (n)
 	{
 
-		if(Empty())	
+		if (Empty())
 		{
 			m_first = n;
 			m_last = n;
-		} 
+		}
 		else
 		{
 			m_first->prev = n;
@@ -35,7 +31,7 @@ void DoubleLinkedList::PushFront(int a_data)
 	}
 }
 
- 	
+
 void DoubleLinkedList::PushBack(int a_data)
 {
 	Node* n = new Node(a_data);
@@ -53,7 +49,7 @@ void DoubleLinkedList::PushBack(int a_data)
 }
 
 
- 	
+
 void DoubleLinkedList::Insert(int a_iter, int a_data)
 {
 	Node* n = new Node(a_data);
@@ -73,16 +69,16 @@ void DoubleLinkedList::Insert(int a_iter, int a_data)
 			Node* cur = m_first;
 			for (int i = 0; i < a_iter; i++)
 				cur = cur->next;
-			
+
 			cur->next->prev = n;
 			n->next = cur->next;
 			cur->next = n;
 			n->prev = cur;
-		} 
+		}
 	}
 }
 
- 	
+
 void DoubleLinkedList::PopFront()
 {
 	if (!Empty())
@@ -102,7 +98,7 @@ void DoubleLinkedList::PopFront()
 	}
 }
 
- 	
+
 void DoubleLinkedList::PopBack()
 {
 	if (!Empty())
@@ -123,7 +119,7 @@ void DoubleLinkedList::PopBack()
 }
 
 
- 
+
 void DoubleLinkedList::Erase(int a_iter)
 {
 	if (!Empty())
@@ -144,7 +140,7 @@ void DoubleLinkedList::Erase(int a_iter)
 	}
 }
 
- 	
+
 void DoubleLinkedList::Remove(int a_data)
 {
 	if (!Empty())
@@ -166,7 +162,7 @@ void DoubleLinkedList::Remove(int a_data)
 }
 
 
- 	
+
 void DoubleLinkedList::Clear()
 {
 	if (!Empty())
@@ -190,7 +186,7 @@ void DoubleLinkedList::Clear()
 	}
 
 }
- 
+
 void DoubleLinkedList::Sort()
 {
 
@@ -243,18 +239,18 @@ void DoubleLinkedList::SetSorted(bool a_bool)
 	m_sortedState = a_bool;
 }
 
-	
- 
+
+
 int DoubleLinkedList::First()
 {
 	if (m_first != nullptr)
 		return m_first->data;
 	else
 		throw "invalid target";
-		
+
 }
-	
- 
+
+
 int DoubleLinkedList::Last()
 {
 	if (m_last != nullptr)
@@ -264,10 +260,10 @@ int DoubleLinkedList::Last()
 }
 
 
- 
+
 int DoubleLinkedList::Size()
 {
-	
+
 	if (Empty())
 		return 0;
 	else
@@ -284,17 +280,17 @@ int DoubleLinkedList::Size()
 }
 
 
- 
+
 bool DoubleLinkedList::Empty()
 {
 	return m_first != nullptr;
 }
 
 
- 
+
 bool DoubleLinkedList::IsSorted()
 {
- 	if (!Empty())
+	if (!Empty())
 	{
 		Node* cur = m_first;
 		while (cur != m_last)
@@ -303,7 +299,6 @@ bool DoubleLinkedList::IsSorted()
 				return false;
 			cur = cur->next;
 		}
-	} 
+	}
 	return true;
 }
-
