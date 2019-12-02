@@ -16,19 +16,21 @@ public:
 	void Sort();
 	void SetSorted(bool a_bool);
 
+	void Print();
+
 	int First();
 	int Last();
+	int Begin();
+	int End();
 
 	int Size();
 
-	bool Empty();
+	bool IsEmpty();
 	bool IsSorted();
 
 	int GiveMeThis = 1;
 
 private:
-	bool m_sortedState = false;
-
 	class Node
 	{
 	public:
@@ -40,7 +42,7 @@ private:
 		int		 data;
 	};
 
-	Node	*m_first,
-		*m_last;
+	bool m_sortedState = false;
+	Node *m_first, *m_last;
 };
 
