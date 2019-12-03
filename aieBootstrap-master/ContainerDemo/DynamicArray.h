@@ -5,6 +5,10 @@ public:
 	DynamicArray();
 	~DynamicArray();
 
+	int operator [](int a_iter);
+
+	void operator = (DynamicArray a_dynArr);
+
 	void PushFront(int a_data);
 	void PushBack(int a_data);
 	void Insert(int a_iter, int a_data);
@@ -14,10 +18,15 @@ public:
 	void Remove(int a_data);
 	void Clear();
 	void Sort();
-	void Upsize();
+	void Upsize(int a_cap = 0);
+	void Downsize();
+
+	void Print();
 
 	int Size();
 	int Capacity();
+
+	int* GetData();
 
 	bool IsEmpty();
 	bool HasRoom();
