@@ -33,6 +33,7 @@ void DLLDemo()
 		cout << "K) Return The Last Nodes Value Of The list" << endl;
 		cout << "L) Return Begin Position The list" << endl;
 		cout << "M) Return Last Nodes Value Of The list" << endl;
+		cout << "N) Go Back To Menu Select" << endl;
 		
 		string uInput = "";
 		cin >> uInput;
@@ -167,6 +168,11 @@ void DLLDemo()
 			cout << DLL->End();
 			system("pause");
 		}
+		else if (uInput == "N")
+		{
+			cin.clear();
+			break;
+		}
 	}
 }
 
@@ -179,26 +185,22 @@ int main(int* argv, int** argc)
 {
 
 	cout << "Failed!" << endl;
-	system("CLS");
-	cout << "What Container Would you like to test?" << endl;
-	cout << "A) DoubleLinkedList or B) DynamicArray" << endl; 
 	string uAnswer = "";
 	int i = 0;
-	bool quit = false;
-	while (!quit)
+	while (true)
 	{
-		if (i != 0)
-		{
 			system("CLS");
-			cout << "Come on. You only have two options to answer this" << endl;
-			cout << "What Container Would you like to test?" << endl;
-			cout << "A) DoubleLinkedList or B) DynamicArray" << endl;
-		}
+		if (i != 0) 
+			cout << "Come on. You only have two options to answer this" << endl;  
+		cout << "What Container Would you like to test?" << endl;
+		cout << "A) DoubleLinkedList or B) DynamicArray or C) the most unpopular option" << endl;
 		cin >> uAnswer;
-		transform(uAnswer.begin(), uAnswer.end(), uAnswer.begin(), toupper);
+		transform(uAnswer.begin(), uAnswer.end(), uAnswer.begin(), toupper); 
+			i++;
 		if (uAnswer == "A" || uAnswer == "DOUBLELINKEDLIST" || uAnswer == "DLL")
 		{
 			DLLDemo();
+			cin.clear();
 			i = 0;
 		}
 		else if (uAnswer == "B" || uAnswer == "DYNAMICARRAY" || uAnswer == "DA")
@@ -215,7 +217,6 @@ int main(int* argv, int** argc)
 			system("pause");
 			return 0;
 		}
-		i++;
 	}
 
 	system("pause");

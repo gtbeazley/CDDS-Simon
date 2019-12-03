@@ -165,7 +165,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DoubleLinkedList.cpp" />
-    <ClCompile Include="DynamicArray.cpp" />
     <ClCompile Include="SimonApp.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -173,7 +172,6 @@
   <ItemGroup>
     <ClInclude Include="Button.h" />
     <ClInclude Include="DoubleLinkedList.h" />
-    <ClInclude Include="DynamicArray.h" />
     <ClInclude Include="SimonApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
