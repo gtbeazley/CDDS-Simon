@@ -25,6 +25,10 @@ public:
 
 	int Size();
 	int Capacity();
+	int First();
+	int Last();
+	int Begin();
+	int End();
 
 	int* GetData();
 
@@ -32,7 +36,7 @@ public:
 	bool HasRoom();
 
 private:
-	int* m_data;
+	int* m_data = new int[1];
 	int m_cap;
 	int m_numOfEl;
 };

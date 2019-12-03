@@ -29,7 +29,7 @@ void DynamicArray::PushFront(int a_data)
 
 	if(!IsEmpty())
 	{
-		int* newData = nullptr;
+		int* newData = new int[m_cap];
 		for (int i = 0; i < m_numOfEl; i++)
 			newData[i + 1] = m_data[i];
 		m_data = newData;
@@ -42,8 +42,9 @@ void DynamicArray::PushBack(int a_data)
 {
 	if (!HasRoom())
 		Upsize();
-	m_data[m_numOfEl] = a_data;
+
 	m_numOfEl++;
+	m_data[m_numOfEl - 1] = a_data;
 }
 
 void DynamicArray::Insert(int a_iter, int a_data)
@@ -57,7 +58,7 @@ void DynamicArray::Insert(int a_iter, int a_data)
 		int * newData = nullptr;
 		for (int i = 0; i < m_numOfEl; i++)
 		{
-			if (i - 1 == a_iter)
+			if (i == a_iter)
 				newData[i+1] = m_data[i];
 			else
 				newData[i] = m_data[i];
@@ -118,14 +119,21 @@ void DynamicArray::Sort()
 
 void DynamicArray::Upsize(int a_cap)
 {
+	int newCap;
 	if (a_cap == 0)
-		m_cap += m_cap;
+		newCap = m_cap + 10;
 	else
-		m_cap += a_cap;
-	int* newData = new int[m_cap];
-	for (int i = 0; i < m_cap - 5; i++)
-		newData[i] = m_data[i];
+		newCap = m_cap + a_cap;
 
+	int* newData = new int[newCap];
+	int original = m_cap;
+	m_cap = newCap;
+
+	for (int i = 0; i < original; i++)
+	{
+		std::cout << m_data[i] << std::endl;
+		newData[i] = m_data[i];
+	}
 	m_data = newData;
 }
 
@@ -152,6 +160,26 @@ int DynamicArray::Size()
 int DynamicArray::Capacity()
 {
 	return m_cap;
+}
+
+int DynamicArray::First()
+{
+	return m_data[0];
+}
+
+int DynamicArray::Last()
+{
+	return m_data[m_numOfEl-1];
+}
+
+int DynamicArray::Begin()
+{
+	return 0;
+}
+
+int DynamicArray::End()
+{
+	return m_numOfEl - 1;
 }
 
 int * DynamicArray::GetData()

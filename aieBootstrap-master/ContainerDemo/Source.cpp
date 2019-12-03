@@ -2,6 +2,7 @@
 #include <string>
 #include <algorithm>
 #include "DoubleLinkedList.h"
+#include "DynamicArray.h"
 
 using namespace std;
 
@@ -177,8 +178,169 @@ void DLLDemo()
 }
 
 void DYNDemo()
-{
+{ 
+	DynamicArray* DA = new DynamicArray();
+	while (true)
+	{
+		system("CLS");
 
+		if (DA && DA->IsEmpty())
+			cout << "There is nothing to print in the Array" << endl;
+		else
+		{
+			cout << "Lets see what you got" << endl;
+			DA->Print();
+			cout << "In total, that is " << DA->Size() << " elements in the Array" << endl << endl;
+		}
+		cout << "A) PushBack The list For value" << endl;
+		cout << "B) PushFront The list For value" << endl;
+		cout << "C) Insert value At position" << endl;
+		cout << "D) Popback The list" << endl;
+		cout << "E) PopFront The list" << endl;
+		cout << "F) Erase The Node At position" << endl;
+		cout << "G) Remove All Nodes Of value" << endl;
+		cout << "H) Clear The list" << endl;
+		cout << "I) Sort The list" << endl;
+		cout << "J) Return The First Nodes Value Of The list" << endl;
+		cout << "K) Return The Last Nodes Value Of The list" << endl;
+		cout << "L) Return Begin Position The list" << endl;
+		cout << "M) Return Last Nodes Value Of The list" << endl;
+		cout << "N) Go Back To Menu Select" << endl;
+		string uInput = "";
+		cin >> uInput;
+		transform(uInput.begin(), uInput.end(), uInput.begin(), toupper);
+		if (uInput == "A")
+		{
+				system("CLS");
+				cout << "What Number are we adding to the List?" << endl;
+				int uAnswer;
+				while (!(cin >> uAnswer))
+				{
+					system("CLS");
+					cout << "What Number are we adding to the List?" << endl;
+					cin.clear();
+					cin.ignore(1164, '\n');
+				}
+				DA->PushBack(uAnswer);
+
+		}
+		else if (uInput == "B")
+		{
+			while (true)
+			{
+				system("CLS");
+				cout << "What Number are we adding to the List?" << endl;
+				int uAnswer;
+				while (!(cin >> uAnswer))
+				{
+					system("CLS");
+					cout << "What Number are we adding to the List?" << endl;
+					cin.clear();
+					cin.ignore(1164, '\n');
+				}
+				DA->PushFront(uAnswer);
+				break;
+			}
+		}
+		else if (uInput == "C")
+		{
+			while (true)
+			{
+				system("CLS");
+				cout << "What Number are we adding to the List?" << endl;
+				int uVal;
+				while (!(cin >> uVal))
+				{
+					system("CLS");
+					cout << "What Number are we adding to the List?" << endl;
+					cin.clear();
+					cin.ignore(1164, '\n');
+				}
+				system("CLS");
+				cout << "Where we putting it?" << endl;
+				int uPos;
+				while (!(cin >> uPos))
+				{
+					system("CLS");
+					cout << "Where we putting it? Integer only." << endl;
+					cin.clear();
+					cin.ignore(1164, '\n');
+				}
+				DA->Insert(uPos, uVal);
+				break;
+			}
+		}
+		else if (uInput == "D") {
+			DA->PopBack();
+		}
+		else if (uInput == "E") {
+			DA->PopFront();
+		}
+		else if (uInput == "F")
+		{
+			while (true)
+			{
+				system("CLS");
+				cout << "Where are we E-Racing? Get it? Cause 'Where'... Ugh" << endl;
+				int uAnswer;
+				while (!(cin >> uAnswer))
+				{
+					system("CLS");
+					cout << "Where are we Erasing?" << endl;
+					cin.clear();
+					cin.ignore(1164, '\n');
+				}
+				DA->Erase(uAnswer);
+				break;
+			}
+		}
+		else if (uInput == "G") {
+			while (true)
+			{
+				system("CLS");
+				cout << "What values are unfit for this list?" << endl;
+				int uAnswer;
+				while (!(cin >> uAnswer))
+				{
+					system("CLS");
+					cout << "Where are we Removing?" << endl;
+					cin.clear();
+					cin.ignore(1164, '\n');
+				}
+				DA->Remove(uAnswer);
+				break;
+			}
+		}
+		else if (uInput == "H") {
+		DA->Clear();
+		}
+		else if (uInput == "I") {
+		DA->Sort();
+		}
+		else if (uInput == "J")
+		{
+			cout << DA->First();
+			system("pause");
+		}
+		else if (uInput == "K")
+		{
+			cout << DA->Last();
+			system("pause");
+		}
+		else if (uInput == "L") {
+			cout << DA->Begin();
+			system("pause");
+		}
+		else if (uInput == "M") {
+			cout << DA->End();
+			system("pause");
+		}
+		else if (uInput == "N")
+		{
+			cin.clear();
+			break;
+		}
+	}
 }
 
 int main(int* argv, int** argc)

@@ -208,12 +208,13 @@ void DoubleLinkedList::Sort()
 				m_first->prev = nullptr;
 				cur->next = m_first->next;
 				m_first->next = cur;
-				cur->next->prev = cur;
+				if(cur->next != nullptr)
+					cur->next->prev = cur;
 				cur->prev = m_first;
 			}
 			else
 				cur = cur->next;
-			while (cur->next != m_last)
+			while (cur->next != m_last && cur->next != nullptr)
 			{
 				if (cur->data > cur->next->data)
 				{
