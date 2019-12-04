@@ -266,7 +266,7 @@ void DoubleLinkedList::Print()
 DoubleLinkedList::Node* DoubleLinkedList::Search(int a_val)
 {
 	if (!IsEmpty())
-		if (IsSorted)
+		if (IsSorted())
 			return binSearch(a_val);
 		else
 			return linSearch(a_val);
@@ -280,10 +280,10 @@ DoubleLinkedList::Node* DoubleLinkedList::Search(int a_val)
 DoubleLinkedList::Node* DoubleLinkedList::linSearch(int a_val)
 {
 	Node * cur = m_first;
-	for (int i = 0; i < Size(); i++)
+	while(cur != nullptr)
 	{
 		if (cur->data == a_val)
-			return i;
+			return cur;
 		cur = cur->next;
 	}
 	cout << "does not exist in this list" << endl;
@@ -297,7 +297,7 @@ DoubleLinkedList::Node* DoubleLinkedList::binSearch(int a_val)
 	Node* head = m_first;
 	Node* tail = m_last;
 	Node* cur = (*this)[searchPos];
-	while (head != tail)
+	while (head != tail && cur != nullptr && tail != nullptr)
 	{
 		searchSize /= 2;
 		if (head->data == a_val)
@@ -309,7 +309,7 @@ DoubleLinkedList::Node* DoubleLinkedList::binSearch(int a_val)
 			tail = cur;
 			searchPos -= searchSize;
 		}
-		else if (cur->data > a_val)
+		else if (a_val > cur->data)
 		{
 			head = cur;
 			searchPos += searchSize;
@@ -319,6 +319,7 @@ DoubleLinkedList::Node* DoubleLinkedList::binSearch(int a_val)
 
 		cur = (*this)[searchPos];
 	}
+	cout << "That value does not exist" << endl;
 	return nullptr;
 }
 

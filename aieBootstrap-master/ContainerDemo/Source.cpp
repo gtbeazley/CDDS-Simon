@@ -34,7 +34,8 @@ void DLLDemo()
 		cout << "K) Return The Last Nodes Value Of The list" << endl;
 		cout << "L) Return Begin Position The list" << endl;
 		cout << "M) Return Last Nodes Value Of The list" << endl;
-		cout << "N) Go Back To Menu Select" << endl;
+		cout << "N) Return the node" << endl;
+		cout << "P) Quit" << endl;
 		
 		string uInput = "";
 		cin >> uInput;
@@ -172,17 +173,21 @@ void DLLDemo()
 		else if (uInput == "N")
 		{
 		system("CLS");
-		cout << "What values are looking for?" << endl;
+		cout << "What values are we looking for?" << endl;
 		int uAnswer;
 		while (!(cin >> uAnswer))
 		{
 			system("CLS");
-			cout << "Where are we Removing?" << endl;
+			cout << "Where values are we looking for?" << endl;
 			cin.clear();
 			cin.ignore(1164, '\n');
 		}
-		cout << DLL->Search(uAnswer) << endl;
+			cout << DLL->Search(uAnswer) << endl;
 			system("pause");
+		}
+		else if (uInput == "P")
+		{
+		return;
 		}
 	}
 }
