@@ -263,7 +263,64 @@ void DoubleLinkedList::Print()
 	}
 }
 
+DoubleLinkedList::Node* DoubleLinkedList::Search(int a_val)
+{
+	if (!IsEmpty())
+		if (IsSorted)
+			return binSearch(a_val);
+		else
+			return linSearch(a_val);
+	else
+	{
+		cout << "Empty list";
+		return nullptr;
+	}
+}
 
+DoubleLinkedList::Node* DoubleLinkedList::linSearch(int a_val)
+{
+	Node * cur = m_first;
+	for (int i = 0; i < Size(); i++)
+	{
+		if (cur->data == a_val)
+			return i;
+		cur = cur->next;
+	}
+	cout << "does not exist in this list" << endl;
+	return nullptr;
+}
+
+DoubleLinkedList::Node* DoubleLinkedList::binSearch(int a_val)
+{
+	int searchSize = Size() - 1;
+	int searchPos = searchSize / 2;
+	Node* head = m_first;
+	Node* tail = m_last;
+	Node* cur = (*this)[searchPos];
+	while (head != tail)
+	{
+		searchSize /= 2;
+		if (head->data == a_val)
+			return head;
+		if (tail->data == a_val)
+			return tail;
+		if (a_val < cur->data)
+		{
+			tail = cur;
+			searchPos -= searchSize;
+		}
+		else if (cur->data > a_val)
+		{
+			head = cur;
+			searchPos += searchSize;
+		}
+		else if (cur->data == a_val)
+			return cur;
+
+		cur = (*this)[searchPos];
+	}
+	return nullptr;
+}
 
 int DoubleLinkedList::First()
 {
@@ -336,4 +393,16 @@ bool DoubleLinkedList::IsSorted()
 		return true;
 	}
 	return true;
+}
+
+DoubleLinkedList::Node * DoubleLinkedList::operator[](int a_iter)
+{
+	if(IsEmpty())
+		return nullptr;
+	if (a_iter > Size() - 1)
+		return m_last;
+	Node* cur = m_first;
+	for (int i = 0; i < a_iter; i++)
+		cur = cur->next;
+	return cur;
 }

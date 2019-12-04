@@ -18,6 +18,9 @@ public:
 
 	void Print();
 
+	int Search(int a_val);
+	int linSearch(int a_val);
+	int binSearch(int a_val);
 	int First();
 	int Last();
 	int Begin();

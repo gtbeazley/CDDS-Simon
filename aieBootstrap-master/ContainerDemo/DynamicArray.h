@@ -32,6 +32,7 @@ public:
 
 	int* GetData();
 
+	bool IsSorted();
 	bool IsEmpty();
 	bool HasRoom();
 

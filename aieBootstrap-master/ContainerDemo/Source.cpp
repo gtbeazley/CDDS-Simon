@@ -171,8 +171,18 @@ void DLLDemo()
 		}
 		else if (uInput == "N")
 		{
+		system("CLS");
+		cout << "What values are looking for?" << endl;
+		int uAnswer;
+		while (!(cin >> uAnswer))
+		{
+			system("CLS");
+			cout << "Where are we Removing?" << endl;
 			cin.clear();
-			break;
+			cin.ignore(1164, '\n');
+		}
+		cout << DLL->Search(uAnswer) << endl;
+			system("pause");
 		}
 	}
 }
@@ -380,7 +390,5 @@ int main(int* argv, int** argc)
 			return 0;
 		}
 	}
-
-	system("pause");
 	return 0;
 }

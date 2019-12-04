@@ -1,5 +1,6 @@
 #include "DynamicArray.h" 
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
@@ -55,7 +56,7 @@ void DynamicArray::Insert(int a_iter, int a_data)
 		m_data[0] = a_data;
 	else
 	{
-		int * newData = nullptr;
+		int * newData = new int[m_cap];
 		for (int i = 0; i < m_numOfEl; i++)
 		{
 			if (i == a_iter)
@@ -92,7 +93,9 @@ void DynamicArray::PopFront()
 void DynamicArray::Erase(int a_iter)
 {
 	for (int i = 0; i < m_numOfEl; i++)
-		if(i != a_iter)
+		if (i < a_iter)
+			m_data[i] = m_data[i];
+		else if(i + 1 != a_iter)
 			m_data[i] = m_data[i + 1];
 	m_numOfEl--;
 }
@@ -102,9 +105,9 @@ void DynamicArray::Remove(int a_data)
 	DynamicArray posList = DynamicArray();
 	for (int i = 0; i < m_numOfEl; i++)
 		if (m_data[i] == a_data)
-			posList.PushBack(a_data);
+			posList.PushBack(i);
 	for (int i = 0; i < posList.Size(); i++)
-		Erase(posList[i]);
+		Erase(posList[i] - i);
 }
 
 void DynamicArray::Clear()
@@ -114,7 +117,17 @@ void DynamicArray::Clear()
 
 void DynamicArray::Sort()
 {
-
+	if(!IsEmpty())
+	while (!IsSorted())
+	{
+		for(int i = 0; i < m_numOfEl - 1; i++)
+			if (m_data[i] > m_data[i + 1])
+			{
+				int temp = m_data[i];
+				m_data[i] = m_data[i + 1];
+				m_data[i + 1] = temp;
+			}
+	}
 }
 
 void DynamicArray::Upsize(int a_cap)
@@ -164,12 +177,22 @@ int DynamicArray::Capacity()
 
 int DynamicArray::First()
 {
-	return m_data[0];
+	if (!(IsEmpty()))
+		return m_data[0];
+	else {
+		cout << "Array is Empty" << endl;
+		return rand();
+	}
 }
 
 int DynamicArray::Last()
 {
-	return m_data[m_numOfEl-1];
+	if (!(IsEmpty()))
+		return m_data[m_numOfEl - 1];
+	else {
+		cout << "Array is Empty" << endl;
+		return rand();
+	}
 }
 
 int DynamicArray::Begin()
@@ -179,12 +202,23 @@ int DynamicArray::Begin()
 
 int DynamicArray::End()
 {
+	if(!IsEmpty())
 	return m_numOfEl - 1;
+	else return m_numOfEl;
 }
 
 int * DynamicArray::GetData()
 {
 	return m_data;
+}
+
+bool DynamicArray::IsSorted()
+{
+	if(!IsEmpty())
+		for (int i = 0; i < m_numOfEl - 1; i++)
+			if (m_data[i] > m_data[i + 1])
+				return false;
+	return true;
 }
 
 bool DynamicArray::IsEmpty()
