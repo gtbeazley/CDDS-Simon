@@ -1,6 +1,17 @@
 #pragma once
 class DoubleLinkedList
 {
+private:
+	class Node
+	{
+	public:
+		Node(int a_v) : data(a_v), next(nullptr), prev(nullptr) { };
+		~Node() { };
+
+		Node	*next,
+			*prev;
+		int		 data;
+	};
 public:
 	DoubleLinkedList();
 	~DoubleLinkedList();
@@ -18,32 +29,24 @@ public:
 
 	void Print();
 
-	int Search(int a_val);
-	int linSearch(int a_val);
-	int binSearch(int a_val);
+	Node* Search(int a_val);
+	Node* linSearch(int a_val);
+	Node* binSearch(int a_val);
+
 	int First();
 	int Last();
 	int Begin();
 	int End();
 
 	int Size();
+	int GiveMeThis = 1;
 
 	bool IsEmpty();
 	bool IsSorted();
 
-	int GiveMeThis = 1;
+	Node* operator [](int a_iter);
 
 private:
-	class Node
-	{
-	public:
-		Node(int a_v) : data(a_v), next(nullptr), prev(nullptr) { };
-		~Node() { };
-
-		Node	*next,
-			*prev;
-		int		 data;
-	};
 
 	bool m_sortedState = false;
 	Node *m_first, *m_last;
