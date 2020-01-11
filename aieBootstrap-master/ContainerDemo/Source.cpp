@@ -2,13 +2,15 @@
 #include <string>
 #include <algorithm>
 #include "DoubleLinkedList.h"
+#include "Node.h"
 #include "DynamicArray.h"
+#include "HashTable.h"
 
 using namespace std;
 
 void DLLDemo()
 {
-	DoubleLinkedList* DLL = new DoubleLinkedList();
+	DoubleLinkedList<int>* DLL = new DoubleLinkedList<int>();
 	while (true)
 	{
 		system("CLS");
@@ -194,7 +196,7 @@ void DLLDemo()
 
 void DYNDemo()
 { 
-	DynamicArray* DA = new DynamicArray();
+	DynamicArray<int>* DA = new DynamicArray<int>();
 	while (true)
 	{
 		system("CLS");
@@ -358,6 +360,99 @@ void DYNDemo()
 	}
 }
 
+void HTBDemo()
+{
+	Hash::HashTable* HT = new Hash::HashTable();
+	while (true)
+	{
+		system("CLS");
+		string uInput = "";
+
+		if (HT && HT->IsEmpty())
+			cout << "There is nothing to print in the Table" << endl;
+		else
+		{
+			cout << "Lets see what you got" << endl;
+			HT->Print();
+			cout << "In total, that is " << HT->NumOfEl() << " elements in the Array" << endl << endl;
+		}
+		cout << "A) Add a Value with a Key" << endl;
+		cout << "B) Remove a Value via Key" << endl;
+		cout << "C) Mass Deletion" << endl;
+		cout << "D) Gain weight" << endl;
+		cout << "E) To say Bye" << endl;
+		cin >> uInput;
+		transform(uInput.begin(), uInput.end(), uInput.begin(), toupper);
+		if (uInput == "A")
+		{
+			system("CLS");
+			while (true)
+			{
+				system("CLS"); 
+				cout << "What Number are we adding to the List?" << endl;
+				int uVal;
+				while (!(cin >> uVal))
+				{
+					system("CLS");
+					cout << "What Number are we adding to the Table?" << endl;
+					cin.clear();
+					cin.ignore(1164, '\n');
+				}
+				system("CLS"); 
+				string uKey;
+				cout << "Create the key for the value." << endl;
+				while (!(cin >> uKey))
+				{
+					system("CLS"); 
+					cin.clear();
+					cin.ignore(1164, '\n');
+				}
+				HT->AddVal(uKey, uVal);
+				break;
+			} 
+		}
+		if (uInput == "B")
+		{
+			system("CLS");
+			string uKey;
+			cout << "What Key would you like to delete" << endl;
+			while (!(cin >> uKey))
+			{
+				system("CLS");
+				cin.clear();
+				cin.ignore(1164, '\n');
+			}
+			HT->RemoveValAtKey(uKey);
+			cout << endl;
+			system("pause");
+		}
+		if (uInput == "C")
+		{
+			system("CLS");
+			HT->ClearTable();
+			system("pause");
+		}
+		if (uInput == "D")
+		{
+			system("CLS");
+			int uSize;
+			cout << "How much weight did we gain. Integers Only." << endl;
+			while (!(cin >> uSize))
+			{
+				system("CLS");
+				cout << "How much weight did we gain. Integers Only." << endl;
+				cin.clear();
+				cin.ignore(1164, '\n'); 
+			}
+			HT->Upsize(uSize);
+		}
+		if (uInput == "E")
+		{
+			break;
+		}
+	}
+}
+
 int main(int* argv, int** argc)
 {
 
@@ -368,9 +463,9 @@ int main(int* argv, int** argc)
 	{
 			system("CLS");
 		if (i != 0) 
-			cout << "Come on. You only have two options to answer this" << endl;  
+			cout << "Come on. You only have four options to answer this" << endl;  
 		cout << "What Container Would you like to test?" << endl;
-		cout << "A) DoubleLinkedList or B) DynamicArray or C) the most unpopular option" << endl;
+		cout << "A) DoubleLinkedList or B) DynamicArray or C) HashTable or D) The most unpopular option" << endl;
 		cin >> uAnswer;
 		transform(uAnswer.begin(), uAnswer.end(), uAnswer.begin(), toupper); 
 			i++;
@@ -385,7 +480,12 @@ int main(int* argv, int** argc)
 			DYNDemo();
 			i = 0;
 		}
-		else if (uAnswer == "C" || uAnswer == "QUIT" || uAnswer == "Q")
+		else if (uAnswer == "C" || uAnswer == "HASHTABLE" || uAnswer == "HT")
+		{
+			HTBDemo();
+			i = 0;
+		}
+		else if (uAnswer == "D" || uAnswer == "QUIT" || uAnswer == "Q")
 			break;
 
 		if (i == 3)

@@ -117,11 +117,17 @@
   <ItemGroup>
     <ClCompile Include="DoubleLinkedList.cpp" />
     <ClCompile Include="DynamicArray.cpp" />
+    <ClCompile Include="HashFunction.cpp" />
+    <ClCompile Include="HashTable.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DoubleLinkedList.h" />
     <ClInclude Include="DynamicArray.h" />
+    <ClInclude Include="HashFunction.h" />
+    <ClInclude Include="HashTable.h" />
+    <ClInclude Include="Node.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
