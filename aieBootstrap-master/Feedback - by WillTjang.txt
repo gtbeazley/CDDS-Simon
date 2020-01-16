@@ -1,0 +1,27 @@
+Reviewer: William Tjang
+Reviewee: George-Thomas Beazley
+
+Q: Does the code conform to a consistent standard?
+A: I'd say so. Nothing particularly stands out as being out of place.
+
+Q: Is the code well commented, easy to read and understand?
+A: Easy to read tbh. Well formatted.
+
+Q: Does the program function as intended?
+A: It works fine from my point of view.
+
+Q: Is the code well structured?
+A: It's actually fine as it is, but its efficiency can still be improved if you desire.
+
+Q: Is the vector and matrix math used correctly to draw the manipulate the position and orientation of the game objects?
+A: They work fine, just as expected.
+
+Q: Is there anything else noteworthy?
+A: The tank slides... quite a bit for a tank. Could maybe increase deceleration so it stops sooner.
+
+Q: How would you rate the quality of this project?
+A: It works, and there are no memory leaks (tested).
+
+Q: What steps could be taken to resolve any quality issues?
+A: Honestly, just work on it some more if you want to improve the quality, since you've finished with the main mechanics. Maybe work on that deceleration.
+An idea is you could make some kind of objective for the game e.g. making enemies or obstacles etc.

@@ -10,7 +10,7 @@ using namespace std;
 
 void DLLDemo()
 {
-	DoubleLinkedList<int>* DLL = new DoubleLinkedList<int>();
+	DoubleLinkedList<int>* DLL = new DoubleLinkedList<int>(); 
 	while (true)
 	{
 		system("CLS");

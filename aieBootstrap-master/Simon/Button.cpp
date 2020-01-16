@@ -12,7 +12,7 @@ Button::~Button()
 
 }
 
-void Button::Draw(aie::Renderer2D* r, aie::Font* f)
+void Button::Draw(aie::Renderer2D* r)
 {
 	SetPos();
 	
@@ -41,12 +41,7 @@ void Button::Update(float dt)
 {
 
 }
-
-void Button::SetFont(aie::Font* f)
-{
-	m_font = f;
-} 
-
+ 
 void Button::SetScreen(float x, float y)
 {
 	screenX = x;

@@ -7,33 +7,50 @@
 
 class SimonApp : public aie::Application {
 public:
-
+	//defaults constructor
 	SimonApp();
+	//destructor
 	virtual ~SimonApp();
 
+	//Initializer function
 	virtual bool startup();
+	//Function for clean ran befor the app is exited
 	virtual void shutdown();
 
+	//runs every frame and is the logic behind it all
+	//deltaTime is the time between frames 
 	virtual void update(float deltaTime);
+	//the draw function ran every frame
 	virtual void draw();
 
+	// Draws the buttons
 	void DrawButtons();
+	//Draws the gamescreen
 	void DrawGameScreen();
+	//Draws the timer
 	void DrawTimer();
 
+	//Sets the timer to the start
 	void SetGameTimer();
+	//sets the play timer to the start
 	void SetPlayerTimer(); 
 
-	 
+	 //updates the game timers status
 	void CheckGameTimer(float dt);
+	//updates the player timers status
 	void CheckPlayerTimer(float dt);
+	//updates the input status
 	void CheckBtnPressed(aie::Input* input);
 
+	//Runs the logic of the buttons and inputs
 	void GameLogic(aie::Input *input, float dt);
 
+	//Traverses to the next level and adds to the scire
 	void NextLevel();
+	//Sends the player to the fail screen 
 	void Fail();
 
+	//Checks if the player matched the queued button or not
 	bool CheckPlayerMatched();
 protected:
 	 

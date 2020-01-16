@@ -1,22 +1,20 @@
 #pragma once  
 
 #include <iostream> 
+#include "Node.h"
 
 using namespace std;
 
-template <typename T>
-class Node;
 
 template<typename T>
 class DoubleLinkedList
 {
 	struct Iterator {
 	private:
-		typename Node<T>* curNode;
+		Node<T>* curNode;
 
 	public:
-		Iterator() {}
-		//Iterator(Node<T>* a_node) { curNode = a_Node; }
+		Iterator() {} 
 		Iterator(int a_iter) { curNode = m_first; this += a_iter; }
 		//Accessor Function
 		T current() { return curNode->data; }
@@ -95,8 +93,8 @@ public:
 	//Returns true if the list has been sorted
 	bool IsSorted();
 
-	Iterator begin();
-	Iterator end();
+	Iterator begin() const { return Iterator(Begin()); }
+	Iterator end() const { return Iterator(End()); }
 	
 	//Returns a pointer to the node at the position of a_iter
 	Node<T>* operator [](int a_iter);
@@ -503,18 +501,7 @@ bool DoubleLinkedList<T>::IsSorted()
 	}
 	return true;
 }
-
-template<typename T>
-typename DoubleLinkedList<T>::Iterator DoubleLinkedList<T>::begin()
-{
-	return Iterator(m_first);
-}
-
-template<typename T>
-typename DoubleLinkedList<T>::Iterator DoubleLinkedList<T>::end()
-{
-	return Iterator(m_last);
-}
+ 
 
 template<typename T>
 Node<T>* DoubleLinkedList<T>::operator[](int a_iter)

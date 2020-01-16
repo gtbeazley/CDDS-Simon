@@ -23,11 +23,13 @@ bool SimonApp::startup() {
 	
 	m_2dRenderer = new aie::Renderer2D();
 	 
+	//Create the four buttons with their ids
 	m_btn1 = new Button(1);
 	m_btn2 = new Button(2);
 	m_btn3 = new Button(3);
 	m_btn4 = new Button(4);
 
+	//Adds each button to the processing list
 	buttons.push_back(m_btn1);
 	buttons.push_back(m_btn2);
 	buttons.push_back(m_btn3);
@@ -272,7 +274,7 @@ void SimonApp::DrawButtons()
 	for (int i = 0; i < 4; i++)
 	{
 		buttons[i]->SetScreen(getWindowWidth(), getWindowHeight());
-		buttons[i]->Draw(m_2dRenderer, m_font);
+		buttons[i]->Draw(m_2dRenderer);
 	}
 
 	if (gameOn)
