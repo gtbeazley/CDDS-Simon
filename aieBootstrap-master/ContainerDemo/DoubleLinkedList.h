@@ -234,12 +234,12 @@ void DoubleLinkedList<T>::Erase(int a_iter)
 	{
 		if (a_iter <= 0)
 			PopFront();
-		else if (a_iter >= Size())
+		else if (a_iter >= Size() - 1)
 			PopBack();
 		else
 		{
 			Node<T>* cur = m_first;
-			for (int i = 0; i < a_iter; i++)
+			for (int i = 0; i < a_iter && cur->next != nullptr; i++)
 				cur = cur->next;
 			cur->next->prev = cur->prev;
 			cur->prev->next = cur->next;
@@ -262,8 +262,12 @@ void DoubleLinkedList<T>::Remove(T a_data)
 		while (cur != nullptr)
 		{
 			if (cur->data == a_data)
+			{
+				cur = cur->prev;
 				Erase(i);
-			i++;
+			}
+			else
+				i++;
 			cur = cur->next;
 		}
 	}
@@ -398,6 +402,8 @@ Node<T>* DoubleLinkedList<T>::linSearch(T a_val)
 template<typename T>
 Node<T>* DoubleLinkedList<T>::binSearch(T a_val)
 {
+	if (m_first->data == a_val)
+		return m_first; 
 	int searchSize = Size() - 1;
 	int searchPos = searchSize / 2;
 	Node<T>* head = m_first;
@@ -435,7 +441,7 @@ T DoubleLinkedList<T>::First()
 	if (m_first != nullptr)
 		return m_first->data;
 	else
-		throw "invalid target";
+		return NULL;
 
 }
 
@@ -445,7 +451,7 @@ T DoubleLinkedList<T>::Last()
 	if (m_last != nullptr)
 		return m_last->data;
 	else
-		throw "invalid target";
+		return NULL;
 }
 
 template<typename T>
