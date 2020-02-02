@@ -3,7 +3,6 @@
 #include "Font.h"
 #include "Input.h"
 #include "Button.h"
-#include "DoubleLinkedList.h"
 
 #include <vector>
 #include <stdio.h>      
@@ -52,25 +51,27 @@ void SimonApp::shutdown() {
 
 void SimonApp::update(float deltaTime) {
 
-	aie::Input*	input = aie::Input::getInstance();
-	//DoubleLinkedList<int> D;
-	//D.PushFront(2);
-	//std::cout << D.First() << std::endl;
+	aie::Input*	input = aie::Input::getInstance(); 
 
+	//Checks the boolean set to see if the game is still playing
 	if (gameOn)
 	{	
+		//This continues the game to the next level..
 		NextLevel();
-
+		//.. and continues to update all logic in the game
 		GameLogic(input, deltaTime);
 	}	
 	else if ( input->isKeyDown(aie::INPUT_KEY_SPACE))
 	{
+		//If we know the game isnt playing that means we are in some sort of waiting state
+		//this means once the player presses space all values are reset 
 		curScore = 0;
 		failed = false;
  		gameOn = true;
 		nextLevel = true;
 	}
 
+	//Determines what timer to tick down whether its playing the seqence o rwaiting for the player input
 	CheckGameTimer(deltaTime);
 	if(!gameTimer)
 		CheckPlayerTimer(deltaTime);
@@ -89,14 +90,14 @@ void SimonApp::draw() {
 	// begin drawing sprites
 	m_2dRenderer->begin();
 	 
+	//Our draw logic
 	DrawTimer();
 
 	DrawButtons();
-	
-	//glm::vec2 scrSize(getWindowWidth(), getWindowHeight());
 
 	DrawGameScreen();
 
+	//Lets player know they could do it even though they wouldn;t want to
 	m_2dRenderer->setRenderColour(1, 1, 1);
 	m_2dRenderer->drawText(m_font, "Press ESC to quit", 0, 0);
 	
@@ -144,8 +145,10 @@ void SimonApp::CheckPlayerTimer(float dt)
 
 void SimonApp::CheckBtnPressed(aie::Input* input)
 {	
+	//Checks to see if the user allowed to press keys
 	if (btnPressable)
 	{
+		//Then checks te users input
 		if (input->isKeyDown(aie::INPUT_KEY_UP)
 			|| input->isKeyDown(aie::INPUT_KEY_W))
 		{
@@ -165,25 +168,29 @@ void SimonApp::CheckBtnPressed(aie::Input* input)
 			|| input->isKeyDown(aie::INPUT_KEY_S))
 		{
 			keyPressed = 4;
-		}
-		//else
-			//btnPressable = true;
+		} 
 	}
 
+	//Checks the keys that was just pressed
 	if (keyPressed != 0)
 	{
+		//adds the key pressed to the keys pressed array
 		keysPressed.push_back(keyPressed);
+		//Gives the player a time before they can repress the key
 		btnIntervalTimer = 10;
 		btnPressable = false;
 	}
 
+	//clears the pressed key
 	keyPressed = 0;
 }
 
 void SimonApp::Fail()
 {
+	//Sets the highscore if needed
 	if (curScore > hiScore)
 		hiScore = curScore;
+	//Resets all in game values
 	gameOn = false;
 	btnIntervalTimer = 0;
 	btnPressable = true;
@@ -191,22 +198,22 @@ void SimonApp::Fail()
 	toBePressed.clear(); 
 	toBePlayed.clear();
 	keysPressed.clear();
+	//Tells the game to stop
 	failed = true;
 }
 
 bool SimonApp::CheckPlayerMatched()
 {
-	if (keysPressed.size() == 1)
-		int t = 1;
-	if (keysPressed.size() == 2)
-		int t = 1;
+	// checks the list of keys that are to be pressed the list of keys that were pressed
 	int i = 0;
 	for (i = 0; i < keysPressed.size(); i++)
 	{
+		//if one of them are wrong this returns false
 		if (keysPressed[i] != toBePressed[i])
 			return false;
 
 	} 
+	//if we have exited the loop we have succeeded
 	return true;
 }
 
@@ -296,44 +303,53 @@ void SimonApp::DrawButtons()
 
 void SimonApp::DrawGameScreen()
 {
+	//If we're waiting for the player to start the game at any time, we print the message
 	if (!gameOn)
 	{
 		m_2dRenderer->drawText(m_font, "Press SPACE to start", getWindowWidth() / 2 - 180, getWindowHeight() / 2 - 10);
 	}
 	else
 	{
+		//If we're not waiting the player that means we're playing the game 
 		if (gameTimer > 0)
 		{
+			//We check if the gameTimer has  more time for the sequence being played
 			m_2dRenderer->drawText(m_font, "Playing Sequence", getWindowWidth() / 2 - 150, getWindowHeight() / 2 - 10);
 		}
 		else if (playerTimer > 0)
 		{
+			//If we know the first timer is up we must check if the second timer has more time
+			//This is when we let the player start playing
 			m_2dRenderer->drawText(m_font, "GOOOOOOO!!!!!", getWindowWidth() / 2 - 100, getWindowHeight() / 2 - 10);
 		}
 
 		for (int i = 0; i < toBePressed.size(); i++)
 		{
+			//The circles are drawn to show how many are left in a red colour
 			m_2dRenderer->setRenderColour(1, 0, 0);
 			m_2dRenderer->drawCircle(getWindowWidth() / 4 + (30 * i), 660, 10);
 
 		}
 		for (int i = 0; i < keysPressed.size(); i++)
 		{
+			//The green cirles are shown to show hom many circles the player got correct
 			if (keysPressed[i] == toBePressed[i])
 				m_2dRenderer->setRenderColour(0, 1, 0);
 			m_2dRenderer->drawCircle(getWindowWidth() / 4 + (30 * i), 660, 10);
 		}
 	}
 
-
+	// Checks if the player had just failed the game
 	if (failed)
 	{
+		//Tell the player how they went
 		m_2dRenderer->setRenderColour(.5, 0, 0);
 		m_2dRenderer->drawBox(getWindowWidth() / 2, getWindowHeight() / 2 + 50, 100, 50);
 
 		m_2dRenderer->setRenderColour(0, 0, 0);
 		m_2dRenderer->drawText(m_font, "Fail", getWindowWidth() / 2 - 35, getWindowHeight() / 2 + 40);
 
+		//Converts the score in to text to print on screen
 		m_2dRenderer->setRenderColour(1, 1, 1);
 		char cScrTxt[64];
 		snprintf(cScrTxt, 64, "Your score: %i points", curScore);
@@ -348,13 +364,15 @@ void SimonApp::DrawTimer()
 {
 	if (playerTimer > 0)
 	{
+		//Draws the timer which the colour and size is based on how much time is left...
 		int fulltime = 32 * toBePlayed.size();
 		if (playerTimer >= fulltime - 2)
 			m_2dRenderer->setRenderColour(0, 1, 0);
 		else
 			m_2dRenderer->setRenderColour(1, 0, 0);
-
+		//... represented by a rectangle
 		m_2dRenderer->drawBox(640, 700, 1280 / (fulltime / playerTimer), 10);
+		//Resets the Colors to the original white
 		m_2dRenderer->setRenderColour(1, 1, 1);
 	}
 }

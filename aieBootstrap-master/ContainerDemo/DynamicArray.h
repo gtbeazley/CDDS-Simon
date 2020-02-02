@@ -48,7 +48,7 @@ public:
 	//Increases the size of the array by a_cap
 	//unless a_cap is zero in which case will double the size of the array
 	void Upsize(int a_cap = 0);
-	//Decreases the sze of the array to thje number of elements that exists
+	//Decreases the sze of the array to the number of elements that exists
 	void Downsize();
 	//Prints out the array to the console
 	void Print();
@@ -160,7 +160,7 @@ void DynamicArray<T>::Insert(int a_iter, T a_data)
 		T * newData = new T[m_cap];
 		for (int i = 0; i < m_numOfEl; i++)
 		{
-			if (i == a_iter)
+			if (i >= a_iter)
 				newData[i + 1] = m_data[i];
 			else
 				newData[i] = m_data[i];

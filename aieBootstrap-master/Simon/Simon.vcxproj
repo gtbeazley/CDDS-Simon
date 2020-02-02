@@ -164,14 +164,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DoubleLinkedList.cpp" />
     <ClCompile Include="SimonApp.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Button.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
-    <ClInclude Include="DoubleLinkedList.h" />
     <ClInclude Include="SimonApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -155,14 +155,14 @@ void DLLDemo()
 			DLL->Sort();
 		}
 		else if (uInput == "J")
-		{
-			cout << DLL->First();
+		{ 
+			cout  << DLL->First() << endl;
 			system("pause");
 		}
 		else if (uInput == "K")
-		{
-		cout << DLL->Last();
-		system("pause");
+		{ 
+			cout << DLL->Last() << endl;
+			system("pause");
 		}
 		else if (uInput == "L") { 
 			cout << DLL->Begin(); 
@@ -184,7 +184,8 @@ void DLLDemo()
 			cin.clear();
 			cin.ignore(1164, '\n');
 		}
-			cout << DLL->Search(uAnswer) << endl;
+		Node<int> n = DLL->Search(uAnswer);
+		cout << &n << ": " << n.data << endl;
 			system("pause");
 		}
 		else if (uInput == "P")

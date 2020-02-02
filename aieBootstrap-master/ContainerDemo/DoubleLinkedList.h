@@ -67,11 +67,11 @@ public:
 
 	//Returns a ptr to the first node with the value a_val 
 	//by using the linSearch method if the list is not sorted and binSearch if the list is sorted
-	Node<T>* Search(T a_val);
+	Node<T> Search(T a_val);
 	//Returns a ptr to the first node with the value a_val by searching each node one by one
-	Node<T>* linSearch(T a_val);
+	Node<T> linSearch(T a_val);
 	//Returns a ptr to the first node with the value a_val by using a binary search method
-	Node<T>* binSearch(T a_val);
+	Node<T> binSearch(T a_val);
 
 	//Returns the value of the first node in the list
 	T First();
@@ -360,7 +360,7 @@ void DoubleLinkedList<T>::Print()
 	if (!IsEmpty())
 	{
 		Node<T>* n = m_first;
-		int i = 1;
+		int i = 0;
 		while (n != nullptr)
 		{
 			cout << i << ") " << n->data << endl;
@@ -371,7 +371,7 @@ void DoubleLinkedList<T>::Print()
 }
 
 template<typename T>
-Node<T>* DoubleLinkedList<T>::Search(T a_val)
+Node<T> DoubleLinkedList<T>::Search(T a_val)
 {
 	if (!IsEmpty())
 		if (IsSorted())
@@ -381,29 +381,29 @@ Node<T>* DoubleLinkedList<T>::Search(T a_val)
 	else
 	{
 		cout << "Empty list";
-		return nullptr;
+		return NULL;
 	}
 }
 
 template<typename T>
-Node<T>* DoubleLinkedList<T>::linSearch(T a_val)
+Node<T> DoubleLinkedList<T>::linSearch(T a_val)
 {
 	Node<T> * cur = m_first;
 	while (cur != nullptr)
 	{
 		if (cur->data == a_val)
-			return cur;
+			return *cur;
 		cur = cur->next;
 	}
 	cout << "does not exist in this list" << endl;
-	return nullptr;
+	return NULL;
 }
 
 template<typename T>
-Node<T>* DoubleLinkedList<T>::binSearch(T a_val)
+Node<T> DoubleLinkedList<T>::binSearch(T a_val)
 {
 	if (m_first->data == a_val)
-		return m_first; 
+		return *m_first; 
 	int searchSize = Size() - 1;
 	int searchPos = searchSize / 2;
 	Node<T>* head = m_first;
@@ -413,9 +413,9 @@ Node<T>* DoubleLinkedList<T>::binSearch(T a_val)
 	{
 		searchSize /= 2;
 		if (head->data == a_val)
-			return head;
+			return *head;
 		if (tail->data == a_val)
-			return tail;
+			return *tail;
 		if (a_val < cur->data)
 		{
 			tail = cur;
@@ -427,12 +427,12 @@ Node<T>* DoubleLinkedList<T>::binSearch(T a_val)
 			searchPos += searchSize;
 		}
 		else if (cur->data == a_val)
-			return cur;
+			return *cur;
 
 		cur = (*this)[searchPos];
 	}
 	cout << "That value does not exist" << endl;
-	return nullptr;
+	return NULL;
 }
 
 template<typename T>
