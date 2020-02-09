@@ -26,9 +26,10 @@ public:
 	void DrawButtons();
 	//Draws the gamescreen
 	void DrawGameScreen();
+	//Draws the instruction scren when called 
+	void DrawInstructionScreen();
 	//Draws the timer
-	void DrawTimer();
-
+	void DrawTimer(); 
 	//Sets the timer to the start
 	void SetGameTimer();
 	//sets the play timer to the start
@@ -62,6 +63,7 @@ protected:
 
 	bool btnPressable = true;
 	bool gameOn = false;
+	bool instructionScreen = false;
 	bool nextLevel = false;
 	bool failed = false;
 
@@ -80,6 +82,8 @@ protected:
 	
 	aie::Renderer2D*	m_2dRenderer;
 	aie::Font*			m_font; 
+
+	aie::Texture* m_arrowKeysTexture, *m_spaceBarTexture, *m_wasdTexture;
 
 	
 };

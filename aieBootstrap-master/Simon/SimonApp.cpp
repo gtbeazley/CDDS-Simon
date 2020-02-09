@@ -37,6 +37,10 @@ bool SimonApp::startup() {
 	// the following path would be used instead: "./font/consolas.ttf"
 	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
 
+	m_arrowKeysTexture = new aie::Texture("./Images/ArrowKeys.png");
+	m_spaceBarTexture = new aie::Texture("./Images/SpaceBar.png");
+	m_wasdTexture = new aie::Texture("./Images/WASD.png");
+
 	return true;
 }
 
@@ -60,8 +64,16 @@ void SimonApp::update(float deltaTime) {
 		NextLevel();
 		//.. and continues to update all logic in the game
 		GameLogic(input, deltaTime);
-	}	
-	else if ( input->isKeyDown(aie::INPUT_KEY_SPACE))
+	}
+	else if (input->isKeyDown(aie::INPUT_KEY_TAB))
+	{
+		instructionScreen = true;
+	}
+	else if (instructionScreen)
+	{
+		if (input->isKeyDown(aie::INPUT_KEY_BACKSPACE)) instructionScreen = false;
+	}
+	else if (input->isKeyDown(aie::INPUT_KEY_SPACE))
 	{
 		//If we know the game isnt playing that means we are in some sort of waiting state
 		//this means once the player presses space all values are reset 
@@ -90,15 +102,26 @@ void SimonApp::draw() {
 	// begin drawing sprites
 	m_2dRenderer->begin();
 	 
+
+	if (instructionScreen)
+	{
+		DrawInstructionScreen();
+
+	}
+	else
+	{
 	//Our draw logic
-	DrawTimer();
+		DrawTimer();
 
-	DrawButtons();
+		DrawButtons();
 
-	DrawGameScreen();
+		DrawGameScreen();
+	
+	}
 
 	//Lets player know they could do it even though they wouldn;t want to
-	m_2dRenderer->setRenderColour(1, 1, 1);
+	if(!instructionScreen)
+		m_2dRenderer->setRenderColour(1, 1, 1);
 	m_2dRenderer->drawText(m_font, "Press ESC to quit", 0, 0);
 	
 	// done drawing sprites
@@ -357,6 +380,20 @@ void SimonApp::DrawGameScreen()
 		char hScrTxt[64];
 		snprintf(hScrTxt, 64, "Highest Score: %i points", hiScore);
 		m_2dRenderer->drawText(m_font, hScrTxt, getWindowWidth() / 20, getWindowHeight() / 8 * 7);
+	}
+}
+
+void SimonApp::DrawInstructionScreen()
+{
+	if (instructionScreen)
+	{
+		float l_screenX = getWindowWidth(), l_screenY = getWindowHeight();
+		m_2dRenderer->drawBox(l_screenX / 2, l_screenY / 2, l_screenX, l_screenY);
+		m_2dRenderer->drawSprite(m_spaceBarTexture, getWindowWidth() / 2 - 180, getWindowHeight() / 2 - 20);
+		m_2dRenderer->drawSprite(m_arrowKeysTexture, getWindowWidth() / 2 - 180, getWindowHeight() / 2 - 20);
+		m_2dRenderer->drawSprite(m_wasdTexture, getWindowWidth() / 2 - 180, getWindowHeight() / 2 - 20); 
+
+		m_2dRenderer->setRenderColour(0, 0, 0, 1);
 	}
 }
 
