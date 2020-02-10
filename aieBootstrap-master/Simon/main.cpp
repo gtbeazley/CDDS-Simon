@@ -8,7 +8,7 @@ int main() {
 	auto app = new SimonApp();
 
 	// initialise and loop
-	app->run("SIMON", 1280, 720, false);
+	app->run("SIMON", 1280, 800, false);
 
 	// deallocation
 	delete app;

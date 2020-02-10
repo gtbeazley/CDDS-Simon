@@ -103,6 +103,7 @@ void SimonApp::draw() {
 	m_2dRenderer->begin();
 	 
 
+
 	if (instructionScreen)
 	{
 		DrawInstructionScreen();
@@ -326,10 +327,12 @@ void SimonApp::DrawButtons()
 
 void SimonApp::DrawGameScreen()
 {
+	float l_screenX = getWindowWidth(), l_screenY = getWindowHeight();
 	//If we're waiting for the player to start the game at any time, we print the message
 	if (!gameOn)
 	{
-		m_2dRenderer->drawText(m_font, "Press SPACE to start", getWindowWidth() / 2 - 180, getWindowHeight() / 2 - 10);
+		m_2dRenderer->drawText(m_font, "Press SPACE to start", l_screenX / 2 - 180, l_screenY / 2 - 10);
+		m_2dRenderer->drawText(m_font, "Press TAB for instructions on how to play", 0 , l_screenY *.95);
 	}
 	else
 	{
@@ -337,20 +340,20 @@ void SimonApp::DrawGameScreen()
 		if (gameTimer > 0)
 		{
 			//We check if the gameTimer has  more time for the sequence being played
-			m_2dRenderer->drawText(m_font, "Playing Sequence", getWindowWidth() / 2 - 150, getWindowHeight() / 2 - 10);
+			m_2dRenderer->drawText(m_font, "Playing Sequence", l_screenX / 2 - 150, l_screenY / 2 - 10);
 		}
 		else if (playerTimer > 0)
 		{
 			//If we know the first timer is up we must check if the second timer has more time
 			//This is when we let the player start playing
-			m_2dRenderer->drawText(m_font, "GOOOOOOO!!!!!", getWindowWidth() / 2 - 100, getWindowHeight() / 2 - 10);
+			m_2dRenderer->drawText(m_font, "GOOOOOOO!!!!!", l_screenX / 2 - 100, l_screenY / 2 - 10);
 		}
 
 		for (int i = 0; i < toBePressed.size(); i++)
 		{
 			//The circles are drawn to show how many are left in a red colour
 			m_2dRenderer->setRenderColour(1, 0, 0);
-			m_2dRenderer->drawCircle(getWindowWidth() / 4 + (30 * i), 660, 10);
+			m_2dRenderer->drawCircle(l_screenX / 4 + (30 * i), 660, 10);
 
 		}
 		for (int i = 0; i < keysPressed.size(); i++)
@@ -358,7 +361,7 @@ void SimonApp::DrawGameScreen()
 			//The green cirles are shown to show hom many circles the player got correct
 			if (keysPressed[i] == toBePressed[i])
 				m_2dRenderer->setRenderColour(0, 1, 0);
-			m_2dRenderer->drawCircle(getWindowWidth() / 4 + (30 * i), 660, 10);
+			m_2dRenderer->drawCircle(l_screenX / 4 + (30 * i), 660, 10);
 		}
 	}
 
@@ -367,19 +370,19 @@ void SimonApp::DrawGameScreen()
 	{
 		//Tell the player how they went
 		m_2dRenderer->setRenderColour(.5, 0, 0);
-		m_2dRenderer->drawBox(getWindowWidth() / 2, getWindowHeight() / 2 + 50, 100, 50);
+		m_2dRenderer->drawBox(l_screenX / 2, l_screenY / 2 + 50, 100, 50);
 
 		m_2dRenderer->setRenderColour(0, 0, 0);
-		m_2dRenderer->drawText(m_font, "Fail", getWindowWidth() / 2 - 35, getWindowHeight() / 2 + 40);
+		m_2dRenderer->drawText(m_font, "Fail", l_screenX / 2 - 35, l_screenY / 2 + 40);
 
 		//Converts the score in to text to print on screen
 		m_2dRenderer->setRenderColour(1, 1, 1);
 		char cScrTxt[64];
 		snprintf(cScrTxt, 64, "Your score: %i points", curScore);
-		m_2dRenderer->drawText(m_font, cScrTxt, getWindowWidth() / 2 - 180, getWindowHeight() / 2 - 70);
+		m_2dRenderer->drawText(m_font, cScrTxt, l_screenX / 2 - 180, l_screenY / 2 - 70);
 		char hScrTxt[64];
 		snprintf(hScrTxt, 64, "Highest Score: %i points", hiScore);
-		m_2dRenderer->drawText(m_font, hScrTxt, getWindowWidth() / 20, getWindowHeight() / 8 * 7);
+		m_2dRenderer->drawText(m_font, hScrTxt, l_screenX / 20, l_screenY / 8 * 7);
 	}
 }
 
@@ -389,11 +392,16 @@ void SimonApp::DrawInstructionScreen()
 	{
 		float l_screenX = getWindowWidth(), l_screenY = getWindowHeight();
 		m_2dRenderer->drawBox(l_screenX / 2, l_screenY / 2, l_screenX, l_screenY);
-		m_2dRenderer->drawSprite(m_spaceBarTexture, getWindowWidth() / 2 - 180, getWindowHeight() / 2 - 20);
-		m_2dRenderer->drawSprite(m_arrowKeysTexture, getWindowWidth() / 2 - 180, getWindowHeight() / 2 - 20);
-		m_2dRenderer->drawSprite(m_wasdTexture, getWindowWidth() / 2 - 180, getWindowHeight() / 2 - 20); 
+		m_2dRenderer->drawSprite(m_spaceBarTexture, l_screenX * .1, l_screenY *.8, 100, 100);
+		m_2dRenderer->drawSprite(m_arrowKeysTexture, l_screenX *.1, l_screenY *.5, 100, 100);
+		m_2dRenderer->drawSprite(m_wasdTexture, l_screenX *.54, l_screenY *.5, 120, 120);
 
+		//The fonts will be written in black because of the white background
 		m_2dRenderer->setRenderColour(0, 0, 0, 1);
+		m_2dRenderer->drawText(m_font, "- start the new round", l_screenX * .15, l_screenY * .8);
+		m_2dRenderer->drawText(m_font, "- press the buttons or ->", l_screenX * .15, l_screenY * .5);
+
+		m_2dRenderer->drawText(m_font, "Press 'BackSpace' to go back", 0, l_screenY * .95);
 	}
 }
 
