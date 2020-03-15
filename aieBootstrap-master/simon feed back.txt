@@ -1,0 +1,23 @@
+Review of George-Thomas Beazley's Simon
+By:
+
+T) Press the 'TAB' Button.
+E) This should open up a screen of instructions
+O)
+
+T) From the instruction screen, press the backspace button. 
+E) This should return you to the main game screen
+O)
+
+T) Play the game by pressing space and answer the next few questions
+
+Q) Did the game similarily represent the toy game simon by hasbro?
+A)
+
+Q) What was your highest score
+A)
+
+Q) Was the game working as expected.
+A) 
+
+
