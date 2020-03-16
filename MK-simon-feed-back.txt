@@ -1,0 +1,24 @@
+Review of George-Thomas Beazley's Simon
+By: Martin Kocourek
+
+T) Press the 'TAB' Button.
+E) This should open up a screen of instructions
+O) Works as expected, but images only display in Release mode.
+
+T) From the instruction screen, press the backspace button. 
+E) This should return you to the main game screen
+O) Works as expected.
+
+T) Play the game by pressing space and answer the next few questions
+
+Q) Did the game similarily represent the toy game simon by hasbro?
+A) Yes.
+
+Q) What was your highest score
+A) 6 points.
+
+Q) Was the game working as expected.
+A) Yes. However, if the player is holding one of the arrow keys down when they press another, that input does not count towards repeating the pattern. This can cause unexpected failures if one tries to repeat the pattern too quickly.
+
+[After Feedback Notes]
+-After reading about the issues, a solve has been found for fast input
