@@ -10,6 +10,8 @@
 #include <time.h>
 #include <iostream>
 
+using namespace aie;
+
 SimonApp::SimonApp() {
 
 }
@@ -284,12 +286,31 @@ void SimonApp::GameLogic(aie::Input *input, float dt)
 	//check if player time has run out
 	else if (playerTimer <= 0)
 		Fail();
-
+	if (keysPressed.size() >0)
 	//check if the time between the buttons pressed is to quick
-	if (btnIntervalTimer > 0)
+	switch(keysPressed.at(keysPressed.size() - 1))
 	{
-		btnIntervalTimer-= dt * 55;
-		//btnPressable = false;
+	case 1:
+		if (input->isKeyUp(aie::INPUT_KEY_UP)
+			&& input->isKeyUp(aie::INPUT_KEY_W))
+			btnPressable = true;
+		break;
+	case 2:
+		if (input->isKeyUp(aie::INPUT_KEY_LEFT)
+			&& input->isKeyUp(aie::INPUT_KEY_A))
+			btnPressable = true;
+		break;
+	case 3:
+		if (input->isKeyUp(aie::INPUT_KEY_RIGHT)
+			&& input->isKeyUp(aie::INPUT_KEY_D))
+			btnPressable = true;
+		break;
+	case 4:
+		if (input->isKeyUp(aie::INPUT_KEY_DOWN)
+			&& input->isKeyUp(aie::INPUT_KEY_S))
+			btnPressable = true;
+		
+		break;
 	}
 	if (input->getPressedKeys().size() == 0)
 	{
