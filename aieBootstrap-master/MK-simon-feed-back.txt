@@ -18,7 +18,9 @@ Q) What was your highest score
 A) 6 points.
 
 Q) Was the game working as expected.
-A) Yes. However, if the player is holding one of the arrow keys down when they press another, that input does not count towards repeating the pattern. This can cause unexpected failures if one tries to repeat the pattern too quickly.
+A) Yes. However, if the player is holding one of the arrow keys down when they press another, that input does not count towards repeating the pattern. 
+This can cause unexpected failures if one tries to repeat the pattern too quickly.
 
 [After Feedback Notes]
--After reading about the issues, a solve has been found for fast input
+- After reading about the issues, a solve has been found for the fast input. 
+	- The buttons now only check to see if the button was let go if the next button is the same button as the last one that was prompted. 

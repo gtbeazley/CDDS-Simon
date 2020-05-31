@@ -14,14 +14,16 @@ Button::~Button()
 
 void Button::Draw(aie::Renderer2D* r)
 {
+	//Incase tbe screen size changes we change the position of the buttons to sit in the spots of the screen
 	SetPos();
 	
+	//Setting the colour to the buttons original state
 	SetColour(r);
-
 	r->drawBox(m_pos.x, m_pos.y, m_size.x, m_size.y);
 
-
+	//resetting the render colour
 	r->setRenderColour(1, 1, 1, 1);
+	//draws the box if being played in the sequence
 	if (IsPlaying())
 	{
 		r->drawBox(m_pos.x, m_pos.y, m_size.x, m_size.y);
@@ -29,11 +31,13 @@ void Button::Draw(aie::Renderer2D* r)
 	}
 	else
 		r->setRenderColour(1, 1, 1, 1);
+	//draws the arrow on the box
 	r->drawBox(m_pos.x, m_pos.y, 40, 40, .775);
 		
+	//Sets the colour according to it being pressed
 	SetBtnDisplay(r);
 
-
+	//Resets the colour back to normal
 	r->setRenderColour(1, 1, 1);
 }
 
