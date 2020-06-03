@@ -146,7 +146,7 @@ void SimonApp::SetGameTimer()
 
 void SimonApp::SetPlayerTimer()
 {
-	playerTimer = toBePressed.size() * 32;
+	playerTimer = toBePressed->Size() * 32;
 	if (toBePlayed.size() == 1)
 	{
 		playerTimer += 32.0f;
@@ -221,7 +221,7 @@ void SimonApp::Fail()
 	btnIntervalTimer = 0;
 	btnPressable = true;
 	keyPressed = 0; 
-	toBePressed.clear(); 
+	toBePressed->Clear(); 
 	toBePlayed.clear();
 	keysPressed.clear();
 	//Tells the game to stop
@@ -235,7 +235,7 @@ bool SimonApp::CheckPlayerMatched()
 	for (i = 0; i < keysPressed.size(); i++)
 	{
 		//if one of them are wrong this returns false
-		if (keysPressed[i] != toBePressed[i])
+		if (keysPressed[i] != *toBePressed[i])
 			return false;
 
 	} 
@@ -254,7 +254,7 @@ void SimonApp::NextLevel()
 
 		//Push the buttons that are going to be checked for the game on to the array
 		toBePlayed.push_back(buttons[RGN]);
-		toBePressed.push_back(1 + RGN);
+		toBePressed->PushBack(1 + RGN);
 
 		//Set timers for the new sequence to be played
 		SetGameTimer();
@@ -279,7 +279,7 @@ void SimonApp::GameLogic(aie::Input *input, float dt)
 		{
 			if (!CheckPlayerMatched())
 				Fail();
-			else if (keysPressed.size() == toBePressed.size())
+			else if (keysPressed.size() == toBePressed->Size())
 				nextLevel = true;
 		}
 	}
@@ -370,7 +370,7 @@ void SimonApp::DrawGameScreen()
 			m_2dRenderer->drawText(m_font, "GOOOOOOO!!!!!", l_screenX / 2 - 100, l_screenY / 2 - 10);
 		}
 
-		for (int i = 0; i < toBePressed.size(); i++)
+		for (int i = 0; i < toBePressed->Size(); i++)
 		{
 			//The circles are drawn to show how many are left in a red colour
 			m_2dRenderer->setRenderColour(1, 0, 0);
@@ -380,7 +380,7 @@ void SimonApp::DrawGameScreen()
 		for (int i = 0; i < keysPressed.size(); i++)
 		{
 			//The green cirles are shown to show hom many circles the player got correct
-			if (keysPressed[i] == toBePressed[i])
+			if (keysPressed[i] == *toBePressed[i])
 				m_2dRenderer->setRenderColour(0, 1, 0);
 			m_2dRenderer->drawCircle(l_screenX / 4 + (30 * i), 660, 10);
 		}

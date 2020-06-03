@@ -41,6 +41,9 @@ public:
 	void Erase(int a_iter);
 	//Removes the first data with the value a_data and reorganises the array
 	void Remove(T a_data);
+	//A faster Removal process 
+	//Removes the first element with the value a_data and replaces the value with the last element
+	void UnorderedRemoval(T a_data);
 	//Clears out the entire array
 	void Clear();
 	//Sorts the entire array
@@ -48,8 +51,9 @@ public:
 	//Increases the size of the array by a_cap
 	//unless a_cap is zero in which case will double the size of the array
 	void Upsize(int a_cap = 0);
-	//Decreases the sze of the array to the number of elements that exists
-	void Downsize();
+	//Decreases the size by a_addCap
+	//If a_delCap cap is less than one, then Downsize becomes the size of the numOfElements
+	void Downsize(int a_delCap = 0);
 	//Prints out the array to the console
 	void Print();
 
@@ -62,6 +66,8 @@ public:
 	T First();
 	//Returns the last value in the array
 	T Last();
+	//Search function that works by starting at a_start and traversing through and checking each value if they match a_data
+	int Search(T a_data, int a_start = 0);
 	//Returns the first elemeents position
 	int Begin();
 	//Returns the lasts elements position
@@ -215,6 +221,14 @@ void DynamicArray<T>::Remove(T a_data)
 		Erase(posList[i] - i);
 }
 
+template<typename T>
+inline void DynamicArray<T>::UnorderedRemoval(T a_data)
+{
+	int l_pos = Search(a_data);
+	m_data[l_pos] = m_data[m_numOfEl - 1];
+	m_numOfEl--;
+}
+
 template <typename T>
 void DynamicArray<T>::Clear()
 {
@@ -240,40 +254,66 @@ void DynamicArray<T>::Sort()
 template <typename T>
 void DynamicArray<T>::Upsize(int a_cap)
 {
+	
 	int newCap;
-	if (a_cap == 0)
-		newCap = m_cap + 10;
-	else
-		newCap = m_cap + a_cap;
+	if (!IsEmpty())
+	{
+		if (a_cap == 0)
+			newCap = m_cap + 10;
+		else
+			newCap = m_cap + a_cap;
 
-	T* newData = new T[newCap];
-	int original = m_cap;
-	m_cap = newCap;
+		T* newData = new T[newCap];
 
-	for (int i = 0; i < original; i++)
-	{ 
-		newData[i] = m_data[i];
+		for (int i = 0; i < m_cap; i++)
+			newData[i] = m_data[i];
+
+		m_cap = newCap;
+		m_data = newData;
 	}
-	m_data = newData;
+	else
+		m_cap += a_cap;
 }
 
 template <typename T>
-void DynamicArray<T>::Downsize()
+void DynamicArray<T>::Downsize(int a_delCap)
 {
-	if (HasRoom())
+	//Create new cap for the new array
+	int newCap;
+	if (a_delCap <= 0)
+		newCap = m_numOfEl;
+	else newCap = m_cap - a_delCap;
+	
+	//Make the new array with the size of the new cap
+	T* newData = new T[newCap];
+	
+	if (newCap < m_numOfEl)
 	{
-		m_cap = m_numOfEl;
-		m_data = new T[m_cap];
+		m_numOfEl = newCap;
 	}
+
+	//Copy data over 
+	for (int i = 0; i < m_numOfEl; i++)
+		newData[i] = m_data[i];
+	
+	//Retarget the focused data
+	m_cap = newCap;
+	m_data = newData;
+
 }
 
 template <typename T>
 void DynamicArray<T>::Print()
 {
 	if(typeid(T) != typeid(DoubleLinkedList<int>))
-	for (int i = 0; i < m_numOfEl; i++)
+	for (int i = 0; i < Capacity(); i++)
 	{ 
-		cout << i << ") " << m_data[i] << endl;
+		cout << i << ") ";
+		
+		if(i < m_numOfEl)
+			cout << m_data[i];
+		
+		cout << endl;
 	}
 }
 
@@ -309,6 +349,14 @@ T DynamicArray<T>::Last()
 		cout << "Array is Empty" << endl;
 		return T();
 	}
+}
+
+template<typename T>
+int DynamicArray<T>::Search(T a_data, int a_start)
+{
+	for (int i = a_start + 1; i < m_numOfEl; i++)
+		if(m_data[i] == a_data)
+			return i;
 }
 
 template <typename T>

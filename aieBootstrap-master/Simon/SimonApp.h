@@ -4,6 +4,8 @@
 #include "Renderer2D.h"
 #include "Button.h"
 
+#include "../ContainerDemo/DynamicArray.h"
+
 class SimonApp : public aie::Application {
 public:
 	//defaults constructor
@@ -75,7 +77,8 @@ protected:
 	Button*				m_btn3;
 	Button*				m_btn4;
 
-	std::vector<int>	toBePressed;
+	//std::vector<int>	toBePressed;
+	DynamicArray<int>*	toBePressed = new DynamicArray<int>(10);
 	std::vector<Button*> buttons;
 	std::vector<Button*> toBePlayed; 
 	std::vector<int>	keysPressed;

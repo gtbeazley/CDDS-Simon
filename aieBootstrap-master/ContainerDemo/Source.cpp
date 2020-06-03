@@ -202,7 +202,7 @@ void DYNDemo()
 	{
 		system("CLS");
 
-		if (DA && DA->IsEmpty())
+		if (DA && DA->Capacity() == 0)
 			cout << "There is nothing to print in the Array" << endl;
 		else
 		{
@@ -223,7 +223,12 @@ void DYNDemo()
 		cout << "K) Return The Last Nodes Value Of The list" << endl;
 		cout << "L) Return Begin Position The list" << endl;
 		cout << "M) Return Last Nodes Value Of The list" << endl;
-		cout << "N) Go Back To Menu Select" << endl;
+		cout << "N) Insert Multiple Values" << endl;
+		cout << "O) Unorderedly Remove A Value In The List" << endl;
+		cout << "P) DownSize The Array" << endl;
+		cout << "Q) UpSize The Array" << endl;
+		cout << "R) Find The Place That A Value Exists In The Array" << endl;
+		cout << "S) Go Back To Menu Select" << endl;
 		string uInput = "";
 		cin >> uInput;
 		transform(uInput.begin(), uInput.end(), uInput.begin(), toupper);
@@ -330,10 +335,10 @@ void DYNDemo()
 			}
 		}
 		else if (uInput == "H") {
-		DA->Clear();
+			DA->Clear();
 		}
 		else if (uInput == "I") {
-		DA->Sort();
+			DA->Sort();
 		}
 		else if (uInput == "J")
 		{
@@ -353,7 +358,97 @@ void DYNDemo()
 			cout << DA->End();
 			system("pause");
 		}
-		else if (uInput == "N")
+		else if (uInput == "N") {
+			system("CLS"); 
+			cout << "How Many Values Would You Like To Add To The Array?" << endl;
+			int uAnswer;
+			while (!(cin >> uAnswer))
+			{
+				system("CLS");
+				cout << "How Many Values Would You Like To Add To The Array?" << endl;
+				cin.clear();
+				cin.ignore(1164, '\n');
+			} 
+			int l_traversePoint = DA->Size() / 2;
+
+			for (int i = 0; i < uAnswer; i++)
+			{
+				system("CLS");
+				cout << i << ") "; 
+				cout << "What is the value you would like to add?" << endl;
+				int uData;
+				while (!(cin >> uData))
+				{
+					system("CLS");
+					cout << i << ") ";
+					cout << "What is the value you would like to add?" << endl;
+					cin.clear();
+					cin.ignore(1164, '\n');
+				}
+				DA->Insert(l_traversePoint, uData);
+
+			}
+
+		}
+		else if (uInput == "O") 
+		{
+			system("CLS");
+			cout << "What value would you like to remove?" << endl;
+			int uAnswer;
+			while (!(cin >> uAnswer))
+			{
+				system("CLS");
+				cout << "What value would you like to remove?" << endl; 
+				cin.clear();
+				cin.ignore(1164, '\n');
+			}
+			DA->UnorderedRemoval(uAnswer);
+		} 
+		else if (uInput == "P") {
+			cout << "" << endl;
+			system("CLS");
+			cout << "How Many Spaces Smaller?" << endl;
+			int uAnswer;
+			while (!(cin >> uAnswer))
+			{
+				system("CLS");
+				cout << "How Many Spaces Smaller?" << endl;
+				cin.clear();
+				cin.ignore(1164, '\n');
+			}
+			DA->Downsize(uAnswer);
+		} 
+		else if (uInput == "Q") {
+			cout << "" << endl;
+			system("CLS");
+			cout << "How Many Spaces Bigger?" << endl;
+			int uAnswer;
+			while (!(cin >> uAnswer))
+			{
+				system("CLS");
+				cout << "How Many Spaces Bigger?" << endl;
+				cin.clear();
+				cin.ignore(1164, '\n');
+			}
+			DA->Upsize(uAnswer);
+
+		}
+		else if (uInput == "R") {
+			cout << "" << endl;
+			system("CLS");
+			cout << "What Value Are We Looking For?" << endl;
+			int uAnswer;
+			while (!(cin >> uAnswer))
+			{
+				system("CLS");
+				cout << "What Value Are We Looking For?" << endl;
+				cin.clear();
+				cin.ignore(1164, '\n');
+			}
+			cout << DA->Search(uAnswer); 
+			system("pause");
+		}
+		else if (uInput == "S")
 		{
 			cin.clear();
 			break;
