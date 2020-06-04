@@ -50,7 +50,7 @@ private:
 
 	bool m_isPlaying;
 	bool btnPressable;
-	int m_id, screenX, screenY;
+	int m_id, screenX = 0, screenY = 0;
 	
 	vec2 m_pos, m_size;
 };

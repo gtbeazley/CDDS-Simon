@@ -11,10 +11,8 @@ template<typename T>
 class DynamicArray
 {
 public:
-	//Default Constructor
-	DynamicArray();
 	//Initialize array with size of a_size
-	DynamicArray(int a_size);
+	DynamicArray();
 	//Default Destructor
 	~DynamicArray();
 
@@ -66,6 +64,8 @@ public:
 	T First();
 	//Returns the last value in the array
 	T Last();
+	//Returns the value at the position a_iter
+	T ReturnVal(int a_iter);
 	//Search function that works by starting at a_start and traversing through and checking each value if they match a_data
 	int Search(T a_data, int a_start = 0);
 	//Returns the first elemeents position
@@ -98,15 +98,9 @@ private:
 	int m_numOfEl;
 };
 
-template <typename T>
-DynamicArray<T>::DynamicArray()
-{
-}
-
 template<typename T>
-inline DynamicArray<T>::DynamicArray(int a_size)
+inline DynamicArray<T>::DynamicArray() : m_cap(0), m_numOfEl(0)
 {
-	Upsize(a_size);
 }
 
 template <typename T>
@@ -349,6 +343,13 @@ T DynamicArray<T>::Last()
 		cout << "Array is Empty" << endl;
 		return T();
 	}
+}
+
+template<typename T>
+inline T DynamicArray<T>::ReturnVal(int a_iter)
+{
+
+	return m_data[a_iter];
 }
 
 template<typename T>

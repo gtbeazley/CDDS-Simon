@@ -78,10 +78,10 @@ protected:
 	Button*				m_btn4;
 
 	//std::vector<int>	toBePressed;
-	DynamicArray<int>*	toBePressed = new DynamicArray<int>(10);
+	DynamicArray<int>* toBePressed;
 	std::vector<Button*> buttons;
 	std::vector<Button*> toBePlayed; 
-	std::vector<int>	keysPressed;
+	DynamicArray<int>* keysPressed;
 	
 	aie::Renderer2D*	m_2dRenderer;
 	aie::Font*			m_font; 

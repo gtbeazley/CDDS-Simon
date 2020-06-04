@@ -23,6 +23,10 @@ SimonApp::~SimonApp() {
 bool SimonApp::startup() {
 	
 	m_2dRenderer = new aie::Renderer2D();
+
+	toBePressed = new DynamicArray<int>();
+	keysPressed = new DynamicArray<int>();
+
 	 
 	//Create the four buttons with their ids
 	m_btn1 = new Button(1);
@@ -201,7 +205,7 @@ void SimonApp::CheckBtnPressed(aie::Input* input)
 	if (keyPressed != 0)
 	{
 		//adds the key pressed to the keys pressed array
-		keysPressed.push_back(keyPressed);
+		keysPressed->PushBack(keyPressed);
 		//Gives the player a time before they can repress the key
 		btnIntervalTimer = 10;
 		btnPressable = false;
@@ -223,7 +227,7 @@ void SimonApp::Fail()
 	keyPressed = 0; 
 	toBePressed->Clear(); 
 	toBePlayed.clear();
-	keysPressed.clear();
+	keysPressed->Clear();
 	//Tells the game to stop
 	failed = true;
 }
@@ -232,10 +236,10 @@ bool SimonApp::CheckPlayerMatched()
 {
 	// checks the list of keys that are to be pressed the list of keys that were pressed
 	int i = 0;
-	for (i = 0; i < keysPressed.size(); i++)
+	for (i = 0; i < keysPressed->Size(); i++)
 	{
 		//if one of them are wrong this returns false
-		if (keysPressed[i] != *toBePressed[i])
+		if (keysPressed->ReturnVal(i) != toBePressed->ReturnVal(i))
 			return false;
 
 	} 
@@ -259,7 +263,7 @@ void SimonApp::NextLevel()
 		//Set timers for the new sequence to be played
 		SetGameTimer();
 		SetPlayerTimer();
-		keysPressed.clear();
+		keysPressed->Clear();
 		nextLevel = false;
 
 	}
@@ -279,16 +283,16 @@ void SimonApp::GameLogic(aie::Input *input, float dt)
 		{
 			if (!CheckPlayerMatched())
 				Fail();
-			else if (keysPressed.size() == toBePressed->Size())
+			else if (keysPressed->Size() == toBePressed->Size())
 				nextLevel = true;
 		}
 	}
 	//check if player time has run out
 	else if (playerTimer <= 0)
 		Fail();
-	if (keysPressed.size() >0)
+	if (keysPressed->Size() >0)
 	//check if the time between the buttons pressed is to quick
-	switch(keysPressed.at(keysPressed.size() - 1))
+	switch(keysPressed->Last())
 	{
 	case 1:
 		if (input->isKeyUp(aie::INPUT_KEY_UP)
@@ -377,10 +381,10 @@ void SimonApp::DrawGameScreen()
 			m_2dRenderer->drawCircle(l_screenX / 4 + (30 * i), 660, 10);
 
 		}
-		for (int i = 0; i < keysPressed.size(); i++)
+		for (int i = 0; i < keysPressed->Size(); i++)
 		{
 			//The green cirles are shown to show hom many circles the player got correct
-			if (keysPressed[i] == *toBePressed[i])
+			if (keysPressed->ReturnVal(i) == toBePressed->ReturnVal(i))
 				m_2dRenderer->setRenderColour(0, 1, 0);
 			m_2dRenderer->drawCircle(l_screenX / 4 + (30 * i), 660, 10);
 		}
