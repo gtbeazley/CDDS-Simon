@@ -238,6 +238,7 @@ bool SimonApp::CheckPlayerMatched()
 	int i = 0;
 	for (i = 0; i < keysPressed->Size(); i++)
 	{
+		cout << keysPressed->ReturnVal(i) << " != " << toBePressed->ReturnVal(i) << endl;
 		//if one of them are wrong this returns false
 		if (keysPressed->ReturnVal(i) != toBePressed->ReturnVal(i))
 			return false;

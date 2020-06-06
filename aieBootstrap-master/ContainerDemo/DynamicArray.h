@@ -141,6 +141,7 @@ void DynamicArray<T>::PushFront(T a_data)
 template <typename T>
 void DynamicArray<T>::PushBack(T a_data)
 {
+	cout << "Adding: " << a_data << endl;
 	if (!HasRoom())
 		Upsize();
 
@@ -259,6 +260,8 @@ void DynamicArray<T>::Upsize(int a_cap)
 
 		T* newData = new T[newCap];
 
+		newData[0] = m_data[0];
+
 		for (int i = 0; i < m_cap; i++)
 			newData[i] = m_data[i];
 
@@ -281,6 +284,8 @@ void DynamicArray<T>::Downsize(int a_delCap)
 	//Make the new array with the size of the new cap
 	T* newData = new T[newCap];
 	
+	newData[0] = m_data[0];
+
 	if (newCap < m_numOfEl)
 	{
 		m_numOfEl = newCap;
