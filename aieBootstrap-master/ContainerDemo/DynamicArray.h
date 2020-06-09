@@ -124,41 +124,51 @@ void DynamicArray<T>::operator=(DynamicArray a_dynArr)
 template <typename T>
 void DynamicArray<T>::PushFront(T a_data)
 {
+	//Make sure there is room for data to be added to the array
 	if (!HasRoom())
 		Upsize();
 
 	if (!IsEmpty())
 	{
+		//Push all elements up one space in a new data array
 		T* newData = new T[m_cap];
 		for (int i = 0; i < m_numOfEl; i++)
 			newData[i + 1] = m_data[i];
+		//Focus on to the nw data array
 		m_data = newData;
 	}
+	//Copy the new data into the first spot
 	m_data[0] = a_data;
+	//Increase number of elements by one
 	m_numOfEl++;
 }
 
 template <typename T>
 void DynamicArray<T>::PushBack(T a_data)
 {
-	cout << "Adding: " << a_data << endl;
+	//Make sure there is room for the new data
 	if (!HasRoom())
 		Upsize();
 
+	//Increase number of elements by one
 	m_numOfEl++;
+	//Add data to the array
 	m_data[m_numOfEl - 1] = a_data;
 }
 
 template <typename T>
 void DynamicArray<T>::Insert(int a_iter, T a_data)
 {
+	//Make sure there is room for the new data
 	if (!HasRoom())
 		Upsize();
+	//If the array is empty make the data the first element in the array
 	if (IsEmpty())
 		m_data[0] = a_data;
 	else
 	{
 		T * newData = new T[m_cap];
+		//Split Data up and make room for a spot in the position 
 		for (int i = 0; i < m_numOfEl; i++)
 		{
 			if (i >= a_iter)
@@ -166,9 +176,12 @@ void DynamicArray<T>::Insert(int a_iter, T a_data)
 			else
 				newData[i] = m_data[i];
 		}
+		//Focus on the new Data
 		m_data = newData;
+		//Set that element on the new value
 		m_data[a_iter] = a_data;
 	}
+	//Increse the number of elements by one
 	m_numOfEl++;
 }
 
@@ -178,6 +191,7 @@ void DynamicArray<T>::PopBack()
 	if (IsEmpty())
 		cout << "Nothing to remove" << endl;
 	else
+		//Just decrease the number of elements by one
 		m_numOfEl--;
 }
 
@@ -188,8 +202,10 @@ void DynamicArray<T>::PopFront()
 		cout << "Nothing to remove" << endl;
 	else
 	{
+		//Copy the value in the position after its position
 		for (int i = 0; i < m_numOfEl; i++)
 			m_data[i] = m_data[i + 1];
+		//Decrease the number of elements by one
 		m_numOfEl--;
 	}
 }
@@ -197,11 +213,13 @@ void DynamicArray<T>::PopFront()
 template <typename T>
 void DynamicArray<T>::Erase(int a_iter)
 {
+	//Copy The values from the position before
 	for (int i = 0; i < m_numOfEl; i++)
 		if (i < a_iter)
 			m_data[i] = m_data[i];
 		else if (i + 1 != a_iter)
 			m_data[i] = m_data[i + 1];
+	//Decrease the number of elements by one
 	m_numOfEl--;
 }
 
@@ -209,9 +227,11 @@ template <typename T>
 void DynamicArray<T>::Remove(T a_data)
 {
 	DynamicArray posList = DynamicArray();
+	//Search for all positions with value a_data
 	for (int i = 0; i < m_numOfEl; i++)
 		if (m_data[i] == a_data)
 			posList.PushBack(i);
+	//Use the positions to erase them
 	for (int i = 0; i < posList.Size(); i++)
 		Erase(posList[i] - i);
 }
@@ -220,7 +240,9 @@ template<typename T>
 inline void DynamicArray<T>::UnorderedRemoval(T a_data)
 {
 	int l_pos = Search(a_data);
+	//Copy the value from the end
 	m_data[l_pos] = m_data[m_numOfEl - 1];
+	//Decrease the number of elements by one
 	m_numOfEl--;
 }
 
@@ -233,12 +255,16 @@ void DynamicArray<T>::Clear()
 template <typename T>
 void DynamicArray<T>::Sort()
 {
+	//Check if its empty or not
 	if (!IsEmpty())
+		//Check if its sorted yet
 		while (!IsSorted())
 		{
+			//Bubble sorting
 			for (int i = 0; i < m_numOfEl - 1; i++)
 				if (m_data[i] > m_data[i + 1])
 				{
+					//If the next is not bigger, swap
 					int temp = m_data[i];
 					m_data[i] = m_data[i + 1];
 					m_data[i + 1] = temp;
@@ -251,25 +277,29 @@ void DynamicArray<T>::Upsize(int a_cap)
 {
 	
 	int newCap;
+	//Determine what the new capacity will be
+	if (a_cap == 0)
+		newCap = m_cap + 10;
+	else
+		newCap = m_cap + a_cap;
 	if (!IsEmpty())
 	{
-		if (a_cap == 0)
-			newCap = m_cap + 10;
-		else
-			newCap = m_cap + a_cap;
 
+		//Make a new array
 		T* newData = new T[newCap];
 
+		//Copy the first data over
 		newData[0] = m_data[0];
 
+		//Copy old data into the new array
 		for (int i = 0; i < m_cap; i++)
 			newData[i] = m_data[i];
 
-		m_cap = newCap;
+		//Set the new data
 		m_data = newData;
 	}
-	else
-		m_cap += a_cap;
+	//Set the cap to the new cap
+	m_cap = newCap;
 }
 
 template <typename T>
@@ -309,6 +339,7 @@ void DynamicArray<T>::Print()
 	{ 
 		cout << i << ") ";
 		
+		//Only print values that are added to the list
 		if(i < m_numOfEl)
 			cout << m_data[i];
 		

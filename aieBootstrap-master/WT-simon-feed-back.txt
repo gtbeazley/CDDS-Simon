@@ -1,0 +1,35 @@
+Tester: George-Thomas Beazley
+Game Programmer: William Tjang
+
+1) Start The Game
+The screen is brought to the game screen where it waits for me to start the first level
+
+2) Start the first level 
+The buttons play a light sequence just like the simon toy. 
+
+3) Try clicking on a button during the sequence
+It doesn't break
+
+4) Fail the level 
+The screen tells me to retry the level. When I press retry the level, the lives are decreased by one and the sequence starts again with a new randomised sequence.
+
+5) Run out of lives
+The game works as intended and tells me to return to the main menu screen. Pressing the blue button returns me to the main menuscreen where i can start the game again.
+
+6) Complete the level 
+The screen tells me that i've passed and asks if id like to continue to the next level. Playing the level gives me a completely new sequence.
+
+7) Press the coming soon button 
+The button says "Soon TM"
+
+8) Pressing the quit button 
+It does exactly what was intended.
+
+9) Summary of the game
+- The game works very similarily to the simon toy, the twist is that with each level has a completely different and random sequence.
+- The aim is to get to the highest level by completing the button sequences.
+
+10) Anyhting else that is noteworthy
+- The game plays as intended, no crashes or problems found in the game
+- I would make each level have a faster sequence as you go along
+- I want to see what it is thats coming soon. 
