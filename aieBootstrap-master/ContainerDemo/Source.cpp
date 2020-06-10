@@ -385,7 +385,7 @@ void DYNDemo()
 					cin.clear();
 					cin.ignore(1164, '\n');
 				}
-				DA->Insert(l_traversePoint, uData);
+				DA->Insert(l_traversePoint + i, uData);
 
 			}
 

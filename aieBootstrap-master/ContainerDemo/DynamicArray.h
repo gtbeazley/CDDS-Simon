@@ -12,7 +12,7 @@ class DynamicArray
 {
 public:
 	//Initialize array with size of a_size
-	DynamicArray();
+	DynamicArray(int a_cap = 0);
 	//Default Destructor
 	~DynamicArray();
 
@@ -40,8 +40,8 @@ public:
 	//Removes the first data with the value a_data and reorganises the array
 	void Remove(T a_data);
 	//A faster Removal process 
-	//Removes the first element with the value a_data and replaces the value with the last element
-	void UnorderedRemoval(T a_data);
+	//Removes the element at position a_iter by replacing its value with the last element
+	void UnorderedRemoval(int a_iter);
 	//Clears out the entire array
 	void Clear();
 	//Sorts the entire array
@@ -99,7 +99,7 @@ private:
 };
 
 template<typename T>
-inline DynamicArray<T>::DynamicArray() : m_cap(10), m_numOfEl(0)
+inline DynamicArray<T>::DynamicArray(int a_cap) : m_cap(a_cap), m_numOfEl(0)
 {
 }
 
@@ -126,7 +126,7 @@ void DynamicArray<T>::PushFront(T a_data)
 {
 	//Make sure there is room for data to be added to the array
 	if (!HasRoom())
-		Upsize();
+		Upsize(1);
 
 	if (!IsEmpty())
 	{
@@ -148,7 +148,7 @@ void DynamicArray<T>::PushBack(T a_data)
 {
 	//Make sure there is room for the new data
 	if (!HasRoom())
-		Upsize();
+		Upsize(1);
 
 	//Increase number of elements by one
 	m_numOfEl++;
@@ -161,7 +161,7 @@ void DynamicArray<T>::Insert(int a_iter, T a_data)
 {
 	//Make sure there is room for the new data
 	if (!HasRoom())
-		Upsize();
+		Upsize(1);
 	//If the array is empty make the data the first element in the array
 	if (IsEmpty())
 		m_data[0] = a_data;
@@ -237,9 +237,9 @@ void DynamicArray<T>::Remove(T a_data)
 }
 
 template<typename T>
-inline void DynamicArray<T>::UnorderedRemoval(T a_data)
+inline void DynamicArray<T>::UnorderedRemoval(int a_pos)
 {
-	int l_pos = Search(a_data);
+	int l_pos = Search(a_pos);
 	//Copy the value from the end
 	m_data[l_pos] = m_data[m_numOfEl - 1];
 	//Decrease the number of elements by one

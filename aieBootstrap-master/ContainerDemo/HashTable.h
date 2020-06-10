@@ -51,10 +51,10 @@ namespace Hash {
 		int m_numOfEl = 0;
 
 		//The array of data
-		DynamicArray<DoubleLinkedList<int>> list = DynamicArray<DoubleLinkedList<int>>();
+		DynamicArray<DoubleLinkedList<int>> list = DynamicArray<DoubleLinkedList<int>>(m_size);
 		
 		//The array of keys
-		DynamicArray<DoubleLinkedList<string>> keys = DynamicArray<DoubleLinkedList<string>>();
+		DynamicArray<DoubleLinkedList<string>> keys = DynamicArray<DoubleLinkedList<string>>(m_size);
 		
 	};
 }
