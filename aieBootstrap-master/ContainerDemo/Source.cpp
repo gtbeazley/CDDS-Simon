@@ -13,7 +13,7 @@ void DLLDemo()
 	DoubleLinkedList<int>* DLL = new DoubleLinkedList<int>(); 
 	while (true)
 	{
-		system("CLS");
+		std::system("CLS");
 
 		if (DLL->IsEmpty())
 			cout << "There is nothing to print in the List" << endl;
@@ -46,12 +46,12 @@ void DLLDemo()
 		{
 			while (true)
 			{
-				system("CLS");
+				std::system("CLS");
 				cout << "What Number are we adding to the List?" << endl;
 				int uAnswer;
 				while (!(cin >> uAnswer))
 				{
-					system("CLS");
+					std::system("CLS");
 					cout << "What Number are we adding to the List?" << endl;
 					cin.clear();
 					cin.ignore(1164, '\n');
@@ -65,12 +65,12 @@ void DLLDemo()
 		{
 			while (true)
 			{
-				system("CLS");
+				std::system("CLS");
 				cout << "What Number are we adding to the List?" << endl;
 				int uAnswer;
 				while (!(cin >> uAnswer))
 				{
-					system("CLS");
+					std::system("CLS");
 					cout << "What Number are we adding to the List?" << endl;
 					cin.clear();
 					cin.ignore(1164, '\n');
@@ -83,22 +83,22 @@ void DLLDemo()
 		{
 			while (true)
 			{
-				system("CLS");
+				std::system("CLS");
 				cout << "What Number are we adding to the List?" << endl;
 				int uVal;
 				while (!(cin >> uVal))
 				{
-					system("CLS");
+					std::system("CLS");
 					cout << "What Number are we adding to the List?" << endl;
 					cin.clear();
 					cin.ignore(1164, '\n');
 				} 
-				system("CLS");
+				std::system("CLS");
 				cout << "Where we putting it?" << endl;
 				int uPos;
 				while (!(cin >> uPos))
 				{
-					system("CLS");
+					std::system("CLS");
 					cout << "Where we putting it? Integer only." << endl;
 					cin.clear();
 					cin.ignore(1164, '\n');
@@ -117,12 +117,12 @@ void DLLDemo()
 		{
 			while (true)
 			{
-				system("CLS");
+				std::system("CLS");
 				cout << "Where are we E-Racing? Get it? Cause 'Where'... Ugh" << endl;
 				int uAnswer;
 				while (!(cin >> uAnswer))
 				{
-					system("CLS");
+					std::system("CLS");
 					cout << "Where are we Erasing?" << endl;
 					cin.clear();
 					cin.ignore(1164, '\n');
@@ -134,12 +134,12 @@ void DLLDemo()
 		else if (uInput == "G") {
 			while (true)
 			{
-				system("CLS");
+				std::system("CLS");
 				cout << "What values are unfit for this list?" << endl;
 				int uAnswer;
 				while (!(cin >> uAnswer))
 				{
-					system("CLS");
+					std::system("CLS");
 					cout << "Where are we Removing?" << endl;
 					cin.clear();
 					cin.ignore(1164, '\n');
@@ -157,36 +157,36 @@ void DLLDemo()
 		else if (uInput == "J")
 		{ 
 			cout  << DLL->First() << endl;
-			system("pause");
+			std::system("pause");
 		}
 		else if (uInput == "K")
 		{ 
 			cout << DLL->Last() << endl;
-			system("pause");
+			std::system("pause");
 		}
 		else if (uInput == "L") { 
 			cout << DLL->Begin(); 
-			system("pause");
+			std::system("pause");
 		}
 		else if (uInput == "M") { 
 			cout << DLL->End();
-			system("pause");
+			std::system("pause");
 		}
 		else if (uInput == "N")
 		{
-		system("CLS");
+		std::system("CLS");
 		cout << "What values are we looking for?" << endl;
 		int uAnswer;
 		while (!(cin >> uAnswer))
 		{
-			system("CLS");
+			std::system("CLS");
 			cout << "Where values are we looking for?" << endl;
 			cin.clear();
 			cin.ignore(1164, '\n');
 		}
 		Node<int> n = DLL->Search(uAnswer);
 		cout << &n << ": " << n.data << endl;
-			system("pause");
+			std::system("pause");
 		}
 		else if (uInput == "P")
 		{
@@ -200,7 +200,7 @@ void DYNDemo()
 	DynamicArray<int>* DA = new DynamicArray<int>();
 	while (true)
 	{
-		system("CLS");
+		std::system("CLS");
 
 		if (DA && DA->Capacity() == 0)
 			cout << "There is nothing to print in the Array" << endl;
@@ -234,12 +234,12 @@ void DYNDemo()
 		transform(uInput.begin(), uInput.end(), uInput.begin(), toupper);
 		if (uInput == "A")
 		{
-				system("CLS");
+				std::system("CLS");
 				cout << "What Number are we adding to the List?" << endl;
 				int uAnswer;
 				while (!(cin >> uAnswer))
 				{
-					system("CLS");
+					std::system("CLS");
 					cout << "What Number are we adding to the List?" << endl;
 					cin.clear();
 					cin.ignore(1164, '\n');
@@ -251,12 +251,12 @@ void DYNDemo()
 		{
 			while (true)
 			{
-				system("CLS");
+				std::system("CLS");
 				cout << "What Number are we adding to the List?" << endl;
 				int uAnswer;
 				while (!(cin >> uAnswer))
 				{
-					system("CLS");
+					std::system("CLS");
 					cout << "What Number are we adding to the List?" << endl;
 					cin.clear();
 					cin.ignore(1164, '\n');
@@ -269,22 +269,22 @@ void DYNDemo()
 		{
 			while (true)
 			{
-				system("CLS");
+				std::system("CLS");
 				cout << "What Number are we adding to the List?" << endl;
 				int uVal;
 				while (!(cin >> uVal))
 				{
-					system("CLS");
+					std::system("CLS");
 					cout << "What Number are we adding to the List?" << endl;
 					cin.clear();
 					cin.ignore(1164, '\n');
 				}
-				system("CLS");
+				std::system("CLS");
 				cout << "Where we putting it?" << endl;
 				int uPos;
 				while (!(cin >> uPos))
 				{
-					system("CLS");
+					std::system("CLS");
 					cout << "Where we putting it? Integer only." << endl;
 					cin.clear();
 					cin.ignore(1164, '\n');
@@ -303,12 +303,12 @@ void DYNDemo()
 		{
 			while (true)
 			{
-				system("CLS");
+				std::system("CLS");
 				cout << "Where are we E-Racing? Get it? Cause 'Where'... Ugh" << endl;
 				int uAnswer;
 				while (!(cin >> uAnswer))
 				{
-					system("CLS");
+					std::system("CLS");
 					cout << "Where are we Erasing?" << endl;
 					cin.clear();
 					cin.ignore(1164, '\n');
@@ -320,12 +320,12 @@ void DYNDemo()
 		else if (uInput == "G") {
 			while (true)
 			{
-				system("CLS");
+				std::system("CLS");
 				cout << "What values are unfit for this list?" << endl;
 				int uAnswer;
 				while (!(cin >> uAnswer))
 				{
-					system("CLS");
+					std::system("CLS");
 					cout << "Where are we Removing?" << endl;
 					cin.clear();
 					cin.ignore(1164, '\n');
@@ -343,28 +343,28 @@ void DYNDemo()
 		else if (uInput == "J")
 		{
 			cout << DA->First();
-			system("pause");
+			std::system("pause");
 		}
 		else if (uInput == "K")
 		{
 			cout << DA->Last();
-			system("pause");
+			std::system("pause");
 		}
 		else if (uInput == "L") {
 			cout << DA->Begin();
-			system("pause");
+			std::system("pause");
 		}
 		else if (uInput == "M") {
 			cout << DA->End();
-			system("pause");
+			std::system("pause");
 		}
 		else if (uInput == "N") {
-			system("CLS"); 
+			std::system("CLS"); 
 			cout << "How Many Values Would You Like To Add To The Array?" << endl;
 			int uAnswer;
 			while (!(cin >> uAnswer))
 			{
-				system("CLS");
+				std::system("CLS");
 				cout << "How Many Values Would You Like To Add To The Array?" << endl;
 				cin.clear();
 				cin.ignore(1164, '\n');
@@ -373,13 +373,13 @@ void DYNDemo()
 
 			for (int i = 0; i < uAnswer; i++)
 			{
-				system("CLS");
+				std::system("CLS");
 				cout << i << ") "; 
 				cout << "What is the value you would like to add?" << endl;
 				int uData;
 				while (!(cin >> uData))
 				{
-					system("CLS");
+					std::system("CLS");
 					cout << i << ") ";
 					cout << "What is the value you would like to add?" << endl;
 					cin.clear();
@@ -392,12 +392,12 @@ void DYNDemo()
 		}
 		else if (uInput == "O") 
 		{
-			system("CLS");
+			std::system("CLS");
 			cout << "What value would you like to remove?" << endl;
 			int uAnswer;
 			while (!(cin >> uAnswer))
 			{
-				system("CLS");
+				std::system("CLS");
 				cout << "What value would you like to remove?" << endl; 
 				cin.clear();
 				cin.ignore(1164, '\n');
@@ -406,12 +406,12 @@ void DYNDemo()
 		} 
 		else if (uInput == "P") {
 			cout << "" << endl;
-			system("CLS");
+			std::system("CLS");
 			cout << "How Many Spaces Smaller?" << endl;
 			int uAnswer;
 			while (!(cin >> uAnswer))
 			{
-				system("CLS");
+				std::system("CLS");
 				cout << "How Many Spaces Smaller?" << endl;
 				cin.clear();
 				cin.ignore(1164, '\n');
@@ -420,12 +420,12 @@ void DYNDemo()
 		} 
 		else if (uInput == "Q") {
 			cout << "" << endl;
-			system("CLS");
+			std::system("CLS");
 			cout << "How Many Spaces Bigger?" << endl;
 			int uAnswer;
 			while (!(cin >> uAnswer))
 			{
-				system("CLS");
+				std::system("CLS");
 				cout << "How Many Spaces Bigger?" << endl;
 				cin.clear();
 				cin.ignore(1164, '\n');
@@ -435,18 +435,18 @@ void DYNDemo()
 		}
 		else if (uInput == "R") {
 			cout << "" << endl;
-			system("CLS");
+			std::system("CLS");
 			cout << "What Value Are We Looking For?" << endl;
 			int uAnswer;
 			while (!(cin >> uAnswer))
 			{
-				system("CLS");
+				std::system("CLS");
 				cout << "What Value Are We Looking For?" << endl;
 				cin.clear();
 				cin.ignore(1164, '\n');
 			}
 			cout << DA->Search(uAnswer); 
-			system("pause");
+			std::system("pause");
 		}
 		else if (uInput == "S")
 		{
@@ -461,7 +461,7 @@ void HTBDemo()
 	Hash::HashTable* HT = new Hash::HashTable();
 	while (true)
 	{
-		system("CLS");
+		std::system("CLS");
 		string uInput = "";
 
 		if (HT && HT->IsEmpty())
@@ -481,25 +481,25 @@ void HTBDemo()
 		transform(uInput.begin(), uInput.end(), uInput.begin(), toupper);
 		if (uInput == "A")
 		{
-			system("CLS");
+			std::system("CLS");
 			while (true)
 			{
-				system("CLS"); 
+				std::system("CLS"); 
 				cout << "What Number are we adding to the List?" << endl;
 				int uVal;
 				while (!(cin >> uVal))
 				{
-					system("CLS");
+					std::system("CLS");
 					cout << "What Number are we adding to the Table?" << endl;
 					cin.clear();
 					cin.ignore(1164, '\n');
 				}
-				system("CLS"); 
+				std::system("CLS"); 
 				string uKey;
 				cout << "Create the key for the value." << endl;
 				while (!(cin >> uKey))
 				{
-					system("CLS"); 
+					std::system("CLS"); 
 					cin.clear();
 					cin.ignore(1164, '\n');
 				}
@@ -509,33 +509,33 @@ void HTBDemo()
 		}
 		if (uInput == "B")
 		{
-			system("CLS");
+			std::system("CLS");
 			string uKey;
 			cout << "What Key would you like to delete" << endl;
 			while (!(cin >> uKey))
 			{
-				system("CLS");
+				std::system("CLS");
 				cin.clear();
 				cin.ignore(1164, '\n');
 			}
 			HT->RemoveValAtKey(uKey);
 			cout << endl;
-			system("pause");
+			std::system("pause");
 		}
 		if (uInput == "C")
 		{
-			system("CLS");
+			std::system("CLS");
 			HT->ClearTable();
-			system("pause");
+			std::system("pause");
 		}
 		if (uInput == "D")
 		{
-			system("CLS");
+			std::system("CLS");
 			int uSize;
 			cout << "How much weight did we gain. Integers Only." << endl;
 			while (!(cin >> uSize))
 			{
-				system("CLS");
+				std::system("CLS");
 				cout << "How much weight did we gain. Integers Only." << endl;
 				cin.clear();
 				cin.ignore(1164, '\n'); 
@@ -557,7 +557,7 @@ int main(int* argv, int** argc)
 	int i = 0;
 	while (true)
 	{
-			system("CLS");
+			std::system("CLS");
 		if (i != 0) 
 			cout << "Come on. You only have four options to answer this" << endl;  
 		cout << "What Container Would you like to test?" << endl;
@@ -587,7 +587,7 @@ int main(int* argv, int** argc)
 		if (i == 3)
 		{
 			cout << "Thats it, I'm sick of you!" << endl;
-			system("pause");
+			std::system("pause");
 			return 0;
 		}
 	}

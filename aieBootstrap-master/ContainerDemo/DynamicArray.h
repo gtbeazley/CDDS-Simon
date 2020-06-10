@@ -99,7 +99,7 @@ private:
 };
 
 template<typename T>
-inline DynamicArray<T>::DynamicArray() : m_cap(0), m_numOfEl(0)
+inline DynamicArray<T>::DynamicArray() : m_cap(10), m_numOfEl(0)
 {
 }
 
